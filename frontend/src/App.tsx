@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import './App.css'
+import LoginButton from "./components/LoginButton"
+import LogoutButton from "./components/LogoutButton"
+import GetTokenButton from './views/GetTokenButton'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,9 +14,9 @@ function App() {
       </div>
       <h1>LangRepo Prototype!!</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          test button!!
-        </button>
+        <LoginButton />
+        <LogoutButton />
+        <GetTokenButton />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

@@ -19,8 +19,11 @@ docker-compose up --build
 
 
 Tutorials Used:
-https://www.youtube.com/watch?v=SqcY0GlETPk&t=384s
+https://www.youtube.com/watch?v=SqcY0GlETPk
 https://www.youtube.com/watch?v=iWS9ogMPOI0
 https://www.youtube.com/watch?v=xtllpDEOw4w
 https://www.youtube.com/watch?v=CzAyaSolZjY
 https://www.youtube.com/watch?v=pTFZFxd4hOI
+https://www.youtube.com/watch?v=pAzqscDx580
+https://www.youtube.com/watch?v=YpvcqxYiyNE
+https://auth0.com/blog/complete-guide-to-react-user-authentication/
