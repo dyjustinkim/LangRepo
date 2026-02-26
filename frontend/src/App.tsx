@@ -3,6 +3,7 @@ import './App.css'
 import LoginButton from "./components/LoginButton"
 import LogoutButton from "./components/LogoutButton"
 import GetTokenButton from './views/GetTokenButton'
+import ItemList from './components/Items'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
         <LoginButton />
         <LogoutButton />
         <GetTokenButton />
+        <ItemList />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

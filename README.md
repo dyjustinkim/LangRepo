@@ -19,11 +19,13 @@ docker-compose up --build
 
 
 Tutorials Used:
-https://www.youtube.com/watch?v=SqcY0GlETPk
-https://www.youtube.com/watch?v=iWS9ogMPOI0
-https://www.youtube.com/watch?v=xtllpDEOw4w
-https://www.youtube.com/watch?v=CzAyaSolZjY
-https://www.youtube.com/watch?v=pTFZFxd4hOI
-https://www.youtube.com/watch?v=pAzqscDx580
-https://www.youtube.com/watch?v=YpvcqxYiyNE
-https://auth0.com/blog/complete-guide-to-react-user-authentication/
+https://www.youtube.com/watch?v=SqcY0GlETPk # Beginner React tutorial
+https://www.youtube.com/watch?v=iWS9ogMPOI0 # FastAPI tutorial
+https://www.youtube.com/watch?v=xtllpDEOw4w # Dockerize React
+https://www.youtube.com/watch?v=CzAyaSolZjY # Dockerize FastAPI
+https://www.youtube.com/watch?v=pTFZFxd4hOI # Docker tutorial
+https://www.youtube.com/watch?v=pAzqscDx580 # Auth0 in React
+https://www.youtube.com/watch?v=YpvcqxYiyNE # JWT Authentication with React and FastAPI
+https://www.youtube.com/watch?v=ZSzzpnsOdrA # Protect FastAPI with Auth0
+https://auth0.com/blog/complete-guide-to-react-user-authentication/ # GetAccessToken in frontend
+https://www.youtube.com/watch?v=aSdVU9-SxH4 #FastAPI backend, React frontend
