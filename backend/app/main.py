@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from app.auth import verifier
 from fastapi.security import OAuth2PasswordBearer
 
-
-
 app = FastAPI()
 
 origins = [

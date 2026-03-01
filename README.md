@@ -28,4 +28,8 @@ https://www.youtube.com/watch?v=pAzqscDx580 # Auth0 in React
 https://www.youtube.com/watch?v=YpvcqxYiyNE # JWT Authentication with React and FastAPI
 https://www.youtube.com/watch?v=ZSzzpnsOdrA # Protect FastAPI with Auth0
 https://auth0.com/blog/complete-guide-to-react-user-authentication/ # GetAccessToken in frontend
-https://www.youtube.com/watch?v=aSdVU9-SxH4 #FastAPI backend, React frontend
+https://www.youtube.com/watch?v=aSdVU9-SxH4 # FastAPI backend, React frontend
+https://www.youtube.com/watch?v=miEFm1CyjfM # Create Postgres database
+https://www.youtube.com/watch?v=LEx96-CkB1Q # DBeaver tutorial
+https://www.tutorialspoint.com/connecting-postgresql-with-sqlalchemy-in-python # Connect to PostgreSQL database with sqlalchemy
+https://www.youtube.com/watch?v=398DuQbQJq0 # FastAPI PostgreSQL SQLAlchemy

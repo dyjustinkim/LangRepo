@@ -1,21 +1,15 @@
-from fastapi import Request, HTTPException, status
+from fastapi import HTTPException, status
 import requests
 from jose import jwt, jwk
 from app.core.settings import settings
 
-
 class VerifyToken():
-    """Does all the token verification using PyJWT"""
 
     def __init__(self, permissions=None, scopes=None):
-        self.algorithms = ["RS256"]
-
         self.permissions = permissions
         self.scopes = scopes
-
         jwks_url = f'https://{settings.auth0_domain}/.well-known/jwks.json'
         self.jwks = requests.get(jwks_url).json()
-
 
     def get_public_key(self, token):
         headers = jwt.get_unverified_header(token)
@@ -34,7 +28,7 @@ class VerifyToken():
             payload = jwt.decode(
                 token,
                 self.signing_key,
-                algorithms=self.algorithms,
+                algorithms=settings.algorithms,
                 audience=settings.auth0_audience,
                 issuer=f"https://{settings.auth0_domain}/"
             )

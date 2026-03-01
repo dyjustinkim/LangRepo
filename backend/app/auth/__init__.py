@@ -1,5 +1,4 @@
-from .dependencies import VerifyToken  # your class
+from .dependencies import VerifyToken  
 
-# instantiate once
 verifier = VerifyToken(
 )
