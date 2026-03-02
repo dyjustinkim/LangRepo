@@ -16,7 +16,6 @@ const ItemList: React.FC = () => {
   const fetchItems = async () => {
     try {
       const response = await authApi.get('/items', getAccessTokenSilently);
-      console.log(response.data.items);
       setItems(response.data.items);
     } catch (error) {
       console.error("Error fetching Items", error);
@@ -26,7 +25,7 @@ const ItemList: React.FC = () => {
   const addItem = async (itemName: string) => {
     try {
       await authApi.post('/items', { name: itemName }, getAccessTokenSilently);
-      fetchItems();  // Refresh the list after adding a Item
+      fetchItems(); 
     } catch (error) {
       console.error("Error adding Item", error);
     }
