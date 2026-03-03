@@ -6,6 +6,6 @@ from sqlalchemy.ext.declarative import declarative_base
 connection_str = settings.DATABASE_URL
 engine = create_engine(connection_str)
 
-SessionLocal = sessionmaker(autocommit=False, autoflash=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

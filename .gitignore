@@ -28,5 +28,4 @@ __pycache__
 node_modules
 
 commands.txt
-
-test.py
+postgres.env
