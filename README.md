@@ -33,3 +33,6 @@ https://www.youtube.com/watch?v=miEFm1CyjfM # Create Postgres database
 https://www.youtube.com/watch?v=LEx96-CkB1Q # DBeaver tutorial
 https://www.tutorialspoint.com/connecting-postgresql-with-sqlalchemy-in-python # Connect to PostgreSQL database with sqlalchemy
 https://www.youtube.com/watch?v=398DuQbQJq0 # FastAPI PostgreSQL SQLAlchemy
+https://www.youtube.com/watch?v=i9RX03zFDHU # Alembic tutorial
+https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308 # Async guide
+https://www.youtube.com/watch?v=xq1Snezb1rs # FastAPI/SQL, multi user

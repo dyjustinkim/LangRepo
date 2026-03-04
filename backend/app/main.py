@@ -1,13 +1,14 @@
 from fastapi import FastAPI, Request, Depends, HTTPException
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Annotated
+from typing import Annotated
 from pydantic import BaseModel
 from app.auth import verifier
 from fastapi.security import OAuth2PasswordBearer
 from app.db import models
 from app.db.database import engine, SessionLocal
 from sqlalchemy.orm import Session
+import app.schemas as schemas
 
 app = FastAPI()
 
@@ -27,21 +28,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-class Item(BaseModel):
-    name: str
-
-class Items(BaseModel):
-    items: List[Item]
-
-class ChoiceBase(BaseModel):
-    choice_text: str
-    is_correct: bool
-
-class QuestionBase(BaseModel):
-    question_text: str
-    choices: List[ChoiceBase]
-
-
 def get_db():
     db = SessionLocal()
     try:
@@ -51,22 +37,20 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def verify_user(token: str = Depends(oauth2_scheme)):
     return verifier.verify(token)
 
-@app.get("/items", response_model=Items)
-def get_items(user=Depends(get_current_user)):
-    return Items(items= [Item(name="test")])
-
-@app.post("/items", response_model=Item)
-async def add_item(item: Item, db: db_dependency, user=Depends(get_current_user)):    
-    db_question = models.Questions(question_text=item.name)
+@app.get("/decks", response_model=list[schemas.DeckResponse])
+def get_decks(db: db_dependency, user=Depends(verify_user)):
+    decks = db.query(models.Deck).filter(models.Deck.user_id == user["sub"]).all()
     
-    db.add(db_question)
+    return decks
+    
+@app.post("/decks", response_model=schemas.DeckCreate)
+async def add_item(deck: schemas.DeckCreate, db: db_dependency, user=Depends(verify_user)):    
+    db_deck = models.Deck(name=deck.name, user_id=user["sub"])    
+    db.add(db_deck)
     db.commit()
-    db.refresh(db_question)
-    for i in range(3):
-        db_choice = models.Choices(choice_text="a", is_correct=True, question_id=i)
-        db.add(db_choice)
-    db.commit()
-    return item
+    # db.refresh(db_deck)
+    
+    return deck

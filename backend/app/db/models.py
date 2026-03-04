@@ -1,16 +1,15 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Text, Column, ForeignKey, Integer, String
 from app.db.database import Base
 
-class Questions(Base):
-    __tablename__ = 'questions'
+class Deck(Base):
+    __tablename__ = "decks"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_id = Column(String, nullable=False)
 
-    id = Column(Integer, primary_key=True, index=True)
-    question_text = Column(String, index=True)
-
-class Choices(Base):
-    __tablename__ = 'choices'
-
-    id = Column(Integer, primary_key=True, index=True)
-    choice_text = Column(String, index=True)
-    is_correct = Column(Boolean, default=False)
-    question_id = Column(Integer, ForeignKey("questions.id"))
+class Flashcard(Base):
+    __tablename__ = "flashcards"
+    id = Column(Integer, primary_key=True)
+    deck_id = Column(Integer, ForeignKey("decks.id"))
+    front = Column(Text)
+    back = Column(Text)
