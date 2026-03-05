@@ -17,7 +17,6 @@ const DeckList: React.FC = () => {
   const fetchDecks = async () => {
     try {
       const response = await authApi.get('/decks', getAccessTokenSilently);
-      console.log(response.data);
       setDecks(response.data);
     } catch (error) {
       console.error("Error fetching Decks", error);

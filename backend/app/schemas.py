@@ -23,4 +23,17 @@ class DeckResponse(BaseModel):
 
     class Config:
         from_attributes = True
+    
+class UserCreate(BaseModel):
+    user_id: str
+    nickname: str
+
+class UserResponse(BaseModel):
+    id: str
+    user_id: str
+    nickname: str
+
+    class Config:
+        from_attributes = True
+
 

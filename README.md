@@ -36,3 +36,6 @@ https://www.youtube.com/watch?v=398DuQbQJq0 # FastAPI PostgreSQL SQLAlchemy
 https://www.youtube.com/watch?v=i9RX03zFDHU # Alembic tutorial
 https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308 # Async guide
 https://www.youtube.com/watch?v=xq1Snezb1rs # FastAPI/SQL, multi user
+https://auth0.com/docs/quickstart/spa/react # Sample React Auth0 Application
+https://www.sitepoint.com/react-router-complete-guide/ # React Router
+https://fastapi.tiangolo.com/tutorial/query-params/#query-parameter-type-conversion # Query parameters

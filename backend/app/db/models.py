@@ -13,3 +13,9 @@ class Flashcard(Base):
     deck_id = Column(Integer, ForeignKey("decks.id"))
     front = Column(Text)
     back = Column(Text)
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String)
+    nickname = Column(String)
