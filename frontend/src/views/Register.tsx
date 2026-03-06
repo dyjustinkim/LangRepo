@@ -1,7 +1,7 @@
 import DeckList from '../components/Decks'
 import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton';
-import AddNameForm from '../components/AddNameForm';
+import AddItem from '../components/AddItem';
 import authApi from '../api/apiClient';
 import {useNavigate, Navigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ export default function Register() {
           <h1> Welcome, new user!</h1>
           <h1> Choose your username:</h1>
           <div className="card">
-            <AddNameForm addUsername={addUsername}/>
+            <AddItem label = "new User" endpoint = "/users" onSuccess={addUsername}/>
         </div>
         <div><LogoutButton /> </div>
     </>

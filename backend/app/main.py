@@ -9,6 +9,7 @@ from app.db import models
 from app.db.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 import app.schemas as schemas
+import app.crud as crud
 
 app = FastAPI()
 
@@ -40,33 +41,38 @@ db_dependency = Annotated[Session, Depends(get_db)]
 def verify_user(token: str = Depends(oauth2_scheme)):
     return verifier.verify(token)
 
-@app.get("/decks", response_model=list[schemas.DeckResponse])
-def get_decks(db: db_dependency, user=Depends(verify_user)):
-    decks = db.query(models.Deck).filter(models.Deck.user_id == user["sub"]).all()
-    
-    return decks
-
 @app.get("/checkuser/{user_sub}")
 def map_user(db: db_dependency, user_sub: str, user=Depends(verify_user)):
-    user = db.query(models.User).filter(models.User.user_id == user_sub).first()
-    return {"exists": bool(user)}
+    return crud.map_user(db, user_sub, user)
 
 @app.get("/users", response_model=str)
-def map_user(db: db_dependency, user=Depends(verify_user)):
-    user = db.query(models.User).filter(models.User.user_id == user["sub"]).first()
-    return user.nickname
+def get_user(db: db_dependency, user=Depends(verify_user)):
+    return crud.get_user(db, user)
     
-@app.post("/decks")
-async def add_item(deck: schemas.DeckCreate, db: db_dependency, user=Depends(verify_user)):    
-    db_deck = models.Deck(name=deck.name, user_id=user["sub"])    
-    db.add(db_deck)
-    db.commit()
-    # db.refresh(db_deck)
-    
-
 @app.post("/users")
-async def add_username(new_user: schemas.UserCreate, db: db_dependency, user=Depends(verify_user)):   
-    db_deck = models.User(nickname=new_user.nickname, user_id=user["sub"])    
-    db.add(db_deck)
-    db.commit()
+def add_username(new_user: schemas.UserCreate, db: db_dependency, user=Depends(verify_user)):   
+    crud.add_username(new_user, db, user)
+
+@app.get("/mapproject/{project_name}")
+def map_project(db: db_dependency, project_name: str,  user=Depends(verify_user)):
+    return crud.map_project(db, project_name, user)
+
+@app.get("/projects", response_model=list[schemas.ProjectResponse])
+def get_projects(db: db_dependency, user=Depends(verify_user)):
+    projects = crud.get_projects(db, user)
+    return projects
+
+@app.post("/projects")
+def add_project(deck: schemas.ProjectCreate, db: db_dependency, user=Depends(verify_user)):
+    crud.add_project(deck, db, user)
+
+@app.get("/decks/{proj_id}", response_model=list[schemas.DeckResponse])
+def get_decks(proj_id: int, db: db_dependency, user=Depends(verify_user)):
+    decks = crud.get_decks(proj_id, db, user)
+    return decks
+
+@app.post("/decks")
+def add_deck(deck: schemas.DeckCreate, db: db_dependency, user=Depends(verify_user)):  
+    crud.add_deck(deck, db, user)
+
     

@@ -1,19 +1,15 @@
-import DeckList from '../components/Decks'
 import {useAuth0} from '@auth0/auth0-react';
-import LogoutButton from '../components/LogoutButton';
+import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
+import ProjectList from '../components/Projects.tsx';
 
 
 
-export default function Profile() {
+export default function Projects() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string | null>(null)
     
-    if (isLoading) {
-        return <div>Loading profile...</div>
-    }
-
     useEffect(() => {
         async function getUser() {
             
@@ -22,6 +18,10 @@ export default function Profile() {
         }
         getUser();
       }, []);
+    
+      if (isLoading) {
+        return <div>Loading profile...</div>
+    }
     
     if (username===null) {
         return <div>Loading username...</div>
@@ -35,7 +35,7 @@ export default function Profile() {
           <h1>LangRepo Prototype!!</h1>
           <h1> Welcome, {username}</h1>
           <div className="card">
-            <DeckList />
+            <ProjectList />
         </div>
         <div><LogoutButton /> </div>
     </>
