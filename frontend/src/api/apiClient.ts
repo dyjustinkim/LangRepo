@@ -13,6 +13,14 @@ export const authApi = {
     const token = await getToken();
     return api.post(endpoint, data, { headers: { Authorization: `Bearer ${token}` } });
   },
+  delete: async (endpoint: string, getToken: () => Promise<string>) => {
+    const token = await getToken();
+    return api.delete(endpoint, { headers: { Authorization: `Bearer ${token}` } });
+  },
+  put: async (endpoint: string, data: any, getToken: () => Promise<string>) => {
+    const token = await getToken();
+    return api.put(endpoint, data, { headers: { Authorization: `Bearer ${token}` } });
+  },
 };
 
 

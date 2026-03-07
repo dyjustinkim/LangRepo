@@ -7,7 +7,7 @@ interface addItemFormProps {
   
 }
 
-const addItem: React.FC<addItemFormProps> = ({ label, endpoint, onSuccess }) => {
+const addItem: React.FC<addItemFormProps> = ({ label, onSuccess }) => {
   const [itemName, setItemName] = useState('');
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {

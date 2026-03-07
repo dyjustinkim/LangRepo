@@ -11,17 +11,16 @@ import Register from './views/Register'
 import Decks from './views/DeckView'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <Routes>
 
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<Projects />} />
+      <Route path="/:username" element={<Projects />} />
       <Route path="/register" element={<Register />} />
       <Route path="/authgate" element={<AuthGate />} />
-      <Route path="/project/:projectName" element={<Decks />} />
+      <Route path="/:username/:project" element={<Decks />} />
     </Routes>
 
   )

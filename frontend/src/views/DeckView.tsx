@@ -3,23 +3,13 @@ import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
-
-
+import { useParams } from "react-router-dom";
 
 export default function Decks() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-    const [username, setUsername] = useState<string | null>(null)
+    const {username} = useParams();
     const [projectId, setProjectId] = useState<number | null>(null);
-    
-    useEffect(() => {
-        async function getUser() {
-            
-        const response = await authApi.get('/users', getAccessTokenSilently);
-        setUsername(response.data);
-        }
-        getUser();
-      }, []);
-    
+        
       if (isLoading) {
         return <div>Loading profile...</div>
     }

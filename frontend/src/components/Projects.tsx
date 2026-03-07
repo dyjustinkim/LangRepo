@@ -3,12 +3,10 @@ import authApi from "../api/apiClient.ts";
 import AddItem from './AddItem.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
+import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import EditDialog from './EditDialog.tsx';
 
 interface project {
   id: number
@@ -18,6 +16,7 @@ interface project {
 const ProjectList: React.FC = () => {
   const [projects, setProjects] = useState<project[]>([]);
   const { getAccessTokenSilently } = useAuth0();
+  const { username } = useParams();
 
   const fetchProjects = async () => {
     try {
@@ -25,6 +24,15 @@ const ProjectList: React.FC = () => {
       setProjects(response.data);
     } catch (error) {
       console.error("Error fetching Projects", error);
+    }
+  };
+
+  const deleteProject = async (projectName: string) => {
+    try {
+      const response = await authApi.delete('/projects/'+projectName, getAccessTokenSilently);
+      fetchProjects(); 
+    } catch (error) {
+      console.error("Error deleting Project", error);
     }
   };
 
@@ -37,6 +45,16 @@ const ProjectList: React.FC = () => {
     }
   };
 
+  const editProject = async (projectName: string, newName: string) => {
+    try {
+      await authApi.put('/projects/'+projectName, { name: newName }, getAccessTokenSilently);
+      fetchProjects(); 
+    } catch (error) {
+      console.error("Error editing Project", error);
+    }
+  };
+
+
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -48,11 +66,16 @@ const ProjectList: React.FC = () => {
   
           <ListGroup>
             {projects.map((project, index) => (
-          <div key={index}>
-            <ListGroup.Item>
-                <Link to={`/project/${project.name}`}>{project.name}</Link>              
+            <ListGroup.Item 
+            key={index}
+            className = "d-flex justify-content-between align-items-center"
+            >
+                <Link to={`/${username}/${project.name}`}>{project.name}</Link>
+                <DropdownButton title="Settings">
+                    <EditDialog oldName={project.name} onSuccess={editProject}>Edit</EditDialog>
+                    <Dropdown.Item onClick={() => deleteProject(project.name)}>Delete</Dropdown.Item>
+                </DropdownButton>              
               </ListGroup.Item>
-          </div>
         ))}
           </ListGroup>
 

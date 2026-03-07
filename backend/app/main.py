@@ -63,8 +63,16 @@ def get_projects(db: db_dependency, user=Depends(verify_user)):
     return projects
 
 @app.post("/projects")
-def add_project(deck: schemas.ProjectCreate, db: db_dependency, user=Depends(verify_user)):
-    crud.add_project(deck, db, user)
+def add_project(project: schemas.ProjectCreate, db: db_dependency, user=Depends(verify_user)):
+    crud.add_project(project, db, user)
+
+@app.delete("/projects/{project_name}")
+def delete_project(db: db_dependency, project_name: str,  user=Depends(verify_user)):
+    crud.delete_project(db, project_name, user)
+
+@app.put("/projects/{old_project}")
+def edit_project(new_project: schemas.ProjectCreate, db: db_dependency, old_project: str,  user=Depends(verify_user)):
+    crud.edit_project(db, new_project, old_project, user)
 
 @app.get("/decks/{proj_id}", response_model=list[schemas.DeckResponse])
 def get_decks(proj_id: int, db: db_dependency, user=Depends(verify_user)):

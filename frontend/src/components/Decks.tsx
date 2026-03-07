@@ -19,7 +19,7 @@ interface deck {
 const DeckList: React.FC = () => {
   const [decks, setDecks] = useState<deck[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{projectName} = useParams();
+  const{username, project} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
 
 
@@ -43,18 +43,22 @@ const DeckList: React.FC = () => {
 
   async function getProjectId() {
             
-    const response = await authApi.get('/mapproject/'+projectName, getAccessTokenSilently);
+    const response = await authApi.get('/mapproject/'+project, getAccessTokenSilently);
     setProjectId(response.data.project_id);
     };
 
   useEffect(() => {
     getProjectId();
-    fetchDecks();
   }, []);
+  useEffect(() => {
+  if (projectId !== null) {
+    fetchDecks();
+  }
+}, [projectId]);
 
   return (
     <div>
-      <h2>Project: {projectName} Decks List</h2>
+      <h2>Project: {project} Decks List</h2>
       <Container>
   
           <ListGroup>

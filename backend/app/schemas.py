@@ -2,12 +2,11 @@ from pydantic import BaseModel
 
 class UserCreate(BaseModel):
     user_id: str
-    nickname: str
+    username: str
 
 class UserResponse(BaseModel):
-    id: str
     user_id: str
-    nickname: str
+    username: str
 
     class Config:
         from_attributes = True

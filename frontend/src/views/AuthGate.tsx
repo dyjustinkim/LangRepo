@@ -16,7 +16,7 @@ export default function AuthGate() {
        if (!response.data.exists) {
         navigate("/register", { replace: true });
       } else {
-        navigate("/profile", { replace: true });
+        navigate(`/${response.data.username}`, { replace: true });
       }
     }
     if (isAuthenticated) {

@@ -12,12 +12,12 @@ export default function Register() {
     const navigate = useNavigate();
     const addUsername = async (username: string) => {
         try {
-          await authApi.post('/users', {nickname: username, user_id: " "}, getAccessTokenSilently);
+          await authApi.post('/users', {username: username, user_id: " "}, getAccessTokenSilently);
+          // user_id handled by backend
         } catch (error) {
           console.error("Error adding Username", error);
         }
-
-        navigate("/profile", { replace: true });
+        navigate(`/${username}`, { replace: true });
       };
 
     return (
