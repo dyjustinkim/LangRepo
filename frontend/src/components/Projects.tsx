@@ -27,9 +27,9 @@ const ProjectList: React.FC = () => {
     }
   };
 
-  const deleteProject = async (projectName: string) => {
+  const deleteProject = async (projectId: number) => {
     try {
-      const response = await authApi.delete('/projects/'+projectName, getAccessTokenSilently);
+      await authApi.delete('/projects/'+projectId, getAccessTokenSilently);
       fetchProjects(); 
     } catch (error) {
       console.error("Error deleting Project", error);
@@ -45,9 +45,9 @@ const ProjectList: React.FC = () => {
     }
   };
 
-  const editProject = async (projectName: string, newName: string) => {
+  const editProject = async (projectId: string | number, newName: string) => {
     try {
-      await authApi.put('/projects/'+projectName, { name: newName }, getAccessTokenSilently);
+      await authApi.put('/projects/'+projectId, { name: newName }, getAccessTokenSilently);
       fetchProjects(); 
     } catch (error) {
       console.error("Error editing Project", error);
@@ -72,8 +72,8 @@ const ProjectList: React.FC = () => {
             >
                 <Link to={`/${username}/${project.name}`}>{project.name}</Link>
                 <DropdownButton title="Settings">
-                    <EditDialog oldName={project.name} onSuccess={editProject}>Edit</EditDialog>
-                    <Dropdown.Item onClick={() => deleteProject(project.name)}>Delete</Dropdown.Item>
+                    <EditDialog oldName={project.name} oldId={project.id} onSuccess={editProject}>Edit</EditDialog>
+                    <Dropdown.Item onClick={() => deleteProject(project.id)}>Delete</Dropdown.Item>
                 </DropdownButton>              
               </ListGroup.Item>
         ))}

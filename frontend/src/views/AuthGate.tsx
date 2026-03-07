@@ -12,7 +12,7 @@ export default function AuthGate() {
     async function checkUser() {
         
       const user_id = encodeURIComponent(user!.sub!)
-      const response = await authApi.get('/checkuser/' + user_id, getAccessTokenSilently);
+      const response = await authApi.get('/users/' + user_id, getAccessTokenSilently);
        if (!response.data.exists) {
         navigate("/register", { replace: true });
       } else {

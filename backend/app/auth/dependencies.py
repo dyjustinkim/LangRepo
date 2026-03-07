@@ -2,6 +2,9 @@ from fastapi import HTTPException, status
 import requests
 from jose import jwt, jwk
 from app.core.settings import settings
+from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends, HTTPException
+
 
 class VerifyToken():
 
@@ -40,3 +43,8 @@ class VerifyToken():
             )
 
         return payload
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+verifier = VerifyToken()
+def verify_user(token: str = Depends(oauth2_scheme)):
+    return verifier.verify(token)

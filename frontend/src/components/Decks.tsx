@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import AddItem from './AddItem.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
-import "bootstrap/dist/css/bootstrap.css";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import EditDialog from './EditDialog.tsx';
 
 
 interface deck {
@@ -19,7 +19,7 @@ interface deck {
 const DeckList: React.FC = () => {
   const [decks, setDecks] = useState<deck[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{username, project} = useParams();
+  const{username, project, deck} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
 
 
@@ -32,6 +32,15 @@ const DeckList: React.FC = () => {
     }
   };
 
+  const deleteDeck = async (deckId: number) => {
+      try {
+        const response = await authApi.delete('/decks/'+deckId, getAccessTokenSilently);
+        fetchDecks(); 
+      } catch (error) {
+        console.error("Error deleting Deck", error);
+      }
+    };
+
   const addDeck = async (deckName: string) => {
     try {
       await authApi.post('/decks', { name: deckName, project_id: projectId }, getAccessTokenSilently);
@@ -41,9 +50,19 @@ const DeckList: React.FC = () => {
     }
   };
 
+  const editDeck = async (deckId: string | number, newName: string) => {
+      try {
+        await authApi.put('/decks/'+deckId, { name: newName, project_id: projectId }, getAccessTokenSilently);
+        fetchDecks(); 
+      } catch (error) {
+        console.error("Error editing Deck", error);
+      }
+    };
+  
+
   async function getProjectId() {
             
-    const response = await authApi.get('/mapproject/'+project, getAccessTokenSilently);
+    const response = await authApi.get('/projects/'+project, getAccessTokenSilently);
     setProjectId(response.data.project_id);
     };
 
@@ -63,11 +82,16 @@ const DeckList: React.FC = () => {
   
           <ListGroup>
             {decks.map((deck, index) => (
-          <div key={index}>
-            <ListGroup.Item>
-                <Link to={'/Login'}>{deck.name}</Link>              
+            <ListGroup.Item 
+            key={index}
+            className = "d-flex justify-content-between align-items-center"
+            >
+                <Link to={`/${username}/${project}/${deck.name}`}>{deck.name}</Link>
+                <DropdownButton title="Settings">
+                    <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Edit</EditDialog>
+                    <Dropdown.Item onClick={() => deleteDeck(deck.id)}>Delete</Dropdown.Item>
+                </DropdownButton>              
               </ListGroup.Item>
-          </div>
         ))}
           </ListGroup>
 

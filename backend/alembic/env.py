@@ -5,8 +5,8 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from app.core.settings import settings
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from app.db.models import Base
-
+from app.db.database import Base
+import app.models
 from alembic import context
 
 # this is the Alembic Config object, which provides

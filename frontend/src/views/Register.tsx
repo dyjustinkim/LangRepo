@@ -30,8 +30,10 @@ export default function Register() {
           <h1> Choose your username:</h1>
           <div className="card">
             <AddItem label = "new User" endpoint = "/users" onSuccess={addUsername}/>
+    
         </div>
-        <div><LogoutButton /> </div>
+        <div><LogoutButton/></div>
+        
     </>
     
     )

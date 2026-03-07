@@ -5,7 +5,7 @@ const LogoutButton: React.FC = () => {
     return (
 
             <button onClick={() => logout()}>
-                Sign Out
+                Log Out
             </button>
         
     )

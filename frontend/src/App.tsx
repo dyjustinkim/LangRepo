@@ -9,18 +9,28 @@ import Login from './views/Login'
 import AuthGate from './views/AuthGate'
 import Register from './views/Register'
 import Decks from './views/DeckView'
+import Flashcards from './views/FlashcardView';
+import Account from './views/Account';
+import PrivateRoutes from './components/PrivateRoute';
+
 
 function App() {
 
   return (
     <Routes>
-
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/:username" element={<Projects />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/authgate" element={<AuthGate />} />
-      <Route path="/:username/:project" element={<Decks />} />
+      <Route element={<PrivateRoutes/>}>
+          <Route path="/:username" element={<Projects />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/authgate" element={<AuthGate />} />
+          <Route path="/:username/:project" element={<Decks />} />
+          <Route path="/:username/:project/:deck" element={<Flashcards />} />
+          <Route path="/:username/account" element={<Account />} />
+              
+        </Route>
+        
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        
     </Routes>
 
   )
