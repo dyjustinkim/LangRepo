@@ -16,10 +16,14 @@ interface deck {
   name: string;
 }
 
-const DeckList: React.FC = () => {
+type DeckListProps = {
+  username: string;
+};
+
+const DeckList =({username}: DeckListProps) => {
   const [decks, setDecks] = useState<deck[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{username, project, deck} = useParams();
+  const{project, deck} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
 
 
@@ -86,7 +90,7 @@ const DeckList: React.FC = () => {
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/${username}/${project}/${deck.name}`}>{deck.name}</Link>
+                <Link to={`/profile/${project}/decks/${deck.name}`}>{deck.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Edit</EditDialog>
                     <Dropdown.Item onClick={() => deleteDeck(deck.id)}>Delete</Dropdown.Item>

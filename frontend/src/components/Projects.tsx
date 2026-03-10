@@ -5,7 +5,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.css";
 import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import EditDialog from './EditDialog.tsx';
 
 interface project {
@@ -13,10 +12,13 @@ interface project {
   name: string;
 }
 
-const ProjectList: React.FC = () => {
+type ProjectListProps = {
+  username: string;
+};
+
+const ProjectList = ({username}: ProjectListProps) => {
   const [projects, setProjects] = useState<project[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const { username } = useParams();
 
   const fetchProjects = async () => {
     try {
@@ -70,7 +72,7 @@ const ProjectList: React.FC = () => {
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/${username}/${project.name}`}>{project.name}</Link>
+                <Link to={`/profile/${project.name}`}>{project.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={project.name} oldId={project.id} onSuccess={editProject}>Edit</EditDialog>
                     <Dropdown.Item onClick={() => deleteProject(project.id)}>Delete</Dropdown.Item>

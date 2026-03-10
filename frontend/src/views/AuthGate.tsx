@@ -11,12 +11,11 @@ export default function AuthGate() {
   useEffect(() => {
     async function checkUser() {
         
-      const user_id = encodeURIComponent(user!.sub!)
-      const response = await authApi.get('/users/' + user_id, getAccessTokenSilently);
-       if (!response.data.exists) {
+      const response = await authApi.get('/users', getAccessTokenSilently);
+       if (response.data == null) {
         navigate("/register", { replace: true });
       } else {
-        navigate(`/${response.data.username}`, { replace: true });
+        navigate(`/profile`, { replace: true });
       }
     }
     if (isAuthenticated) {

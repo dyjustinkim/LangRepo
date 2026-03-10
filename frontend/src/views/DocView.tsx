@@ -1,3 +1,5 @@
+import { Document, Page } from 'react-pdf';
+import PdfViewer from '../components/PdfViewer';
 import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
@@ -5,7 +7,7 @@ import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
 import MyNavBar from '../components/myNavBar.tsx';
 
-export default function Flashcards() {
+export default function Docs() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [projectId, setProjectId] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');
@@ -25,20 +27,20 @@ export default function Flashcards() {
             useEffect(() => {
                 fetchUser();
               }, []);
-            
-    return (
-    
-    <>
+
+
+  return (
+
+     <>
         <MyNavBar username={username}></MyNavBar>
           <div className="card">
-            Flashcard View
+                  <PdfViewer url={"https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"} />
+
         </div>
 
 
 
     </>
     
-    )
+  );
 }
-
-

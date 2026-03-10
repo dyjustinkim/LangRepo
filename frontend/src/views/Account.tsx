@@ -2,7 +2,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
-import { useParams } from "react-router-dom";
 import MyNavBar from '../components/myNavBar.tsx';
 import { Container } from 'react-bootstrap';
 import AddItem from '../components/AddItem.tsx';
@@ -11,8 +10,7 @@ import {useNavigate, Navigate } from 'react-router-dom';
 
 export default function Account() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-    const {username} = useParams();
-    const [projectId, setProjectId] = useState<number | null>(null);
+    const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
         
 
@@ -39,8 +37,7 @@ export default function Account() {
         event.preventDefault();
         if (username) {
           await editUsername(user!.sub!, username);
-          navigate(`/${username}/account`, { replace: true })
-          setUsername('');
+          fetchUser();
         }
       };
     
@@ -48,7 +45,6 @@ export default function Account() {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder={"Enter new username"}
           />
@@ -57,12 +53,25 @@ export default function Account() {
       );
     };
 
+    const fetchUser = async () => {
+                try {
+                  const response = await authApi.get('/users', getAccessTokenSilently);
+                  setUsername(response.data.username);
+                } catch (error) {
+                  console.error("Error fetching User", error);
+                }
+              };
+        
+    useEffect(() => {
+        fetchUser();
+        }, []);
+
     
     
     return (
     
     <>
-        <MyNavBar></MyNavBar>
+        <MyNavBar username={username}></MyNavBar>
 
         <div className="card">
             <h2>Account Settings</h2>

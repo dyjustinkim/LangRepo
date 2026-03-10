@@ -6,11 +6,7 @@ from app.schemas.user import UserCreate
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-@router.get("/{user_sub}")
-def map_user(db: db_dependency, user_sub: str, user=Depends(verify_user)):
-    return user_crud.map_user(db, user_sub, user)
-
-@router.get("", response_model=str)
+@router.get("")
 def get_user(db: db_dependency, user=Depends(verify_user)):
     return user_crud.get_user(db, user)
     

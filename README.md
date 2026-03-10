@@ -39,3 +39,9 @@ https://www.youtube.com/watch?v=xq1Snezb1rs # FastAPI/SQL, multi user
 https://auth0.com/docs/quickstart/spa/react # Sample React Auth0 Application
 https://www.sitepoint.com/react-router-complete-guide/ # React Router
 https://fastapi.tiangolo.com/tutorial/query-params/#query-parameter-type-conversion # Query parameters
+https://github.com/ThomasAitken/demo-fastapi-async-sqlalchemy/tree/main # Sample fastiapi/async sqlalchemy repository
+https://medium.com/@suganthi2496/full-stack-development-with-fastapi-and-react-a-crud-operations-walkthrough-beb2a9c660ed # FastAPI CRUD walkthrough
+https://medium.com/@aberrospic1/crud-operations-with-fastapi-c2de026e5862 # CRUD walkthrough
+https://dev.to/gilly7/building-your-first-full-stack-crud-app-with-fastapi-and-reactjs-3i1n # CRUD walkthrough
+https://react-bootstrap.netlify.app/docs/components/navbar/ # React NavBar component
+https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c # Private routes

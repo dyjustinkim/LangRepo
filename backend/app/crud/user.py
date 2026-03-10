@@ -2,15 +2,9 @@ from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user import UserCreate
 
-
-def map_user(db: Session, user_sub: str, auth0_id:str):
-    user = db.query(User).filter(User.user_id == user_sub).first()
-    username = user.username if bool(user) else None
-    return {"exists": bool(user), "username": username}
-
 def get_user(db: Session, auth0_id:str):
     user = db.query(User).filter(User.user_id == auth0_id["sub"]).first()
-    return user.username
+    return user
     
 def add_username(new_user: UserCreate, db: Session, auth0_id:str):   
     db_deck = User(username=new_user.username, user_id=auth0_id["sub"])    

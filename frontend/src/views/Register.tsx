@@ -17,7 +17,7 @@ export default function Register() {
         } catch (error) {
           console.error("Error adding Username", error);
         }
-        navigate(`/${username}`, { replace: true });
+        navigate(`/profile`, { replace: true });
       };
 
     return (
