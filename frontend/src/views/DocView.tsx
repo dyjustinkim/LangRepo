@@ -9,8 +9,9 @@ import MyNavBar from '../components/myNavBar.tsx';
 
 export default function Docs() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-    const [projectId, setProjectId] = useState<number | null>(null);
+    const {doc} = useParams();
     const [username, setUsername] = useState<string>('');
+    const [url, setURL] = useState<any>('');
         
       if (isLoading) {
         return <div>Loading profile...</div>
@@ -23,9 +24,19 @@ export default function Docs() {
                   console.error("Error fetching User", error);
                 }
               };
+
+    const viewDoc = async () => {
+                try {
+                  const my_url = await authApi.get(`/docs/view/${doc}`, getAccessTokenSilently);
+                  setURL(my_url);
+                } catch (error) {
+                  console.error("Error fetching Doc", error);
+                }
+              };
         
             useEffect(() => {
                 fetchUser();
+                viewDoc();
               }, []);
 
 
@@ -34,7 +45,10 @@ export default function Docs() {
      <>
         <MyNavBar username={username}></MyNavBar>
           <div className="card">
-                  <PdfViewer url={"https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"} />
+                  {url && <div> 
+                    <h2>{url.data.name}</h2>
+                    <PdfViewer url={url.data.url} /> 
+                    </div>}
 
         </div>
 

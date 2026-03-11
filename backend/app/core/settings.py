@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     database_name: str
     database_user: str
     database_password: str
+    bucket_name: str
+    aws_access_key_id: str
+    aws_secret_access_key: str
+    aws_region: str
 
     @property
     def DATABASE_URL(self) -> str:

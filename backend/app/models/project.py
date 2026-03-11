@@ -13,3 +13,9 @@ class Project(Base):
         back_populates="project",
         cascade="all, delete"
     )
+
+    docs = relationship(
+        "Doc",
+        back_populates="project",
+        cascade="all, delete"
+    )

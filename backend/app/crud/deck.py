@@ -13,11 +13,11 @@ def add_deck(deck: DeckCreate, db: Session, auth0_id:str):
     db.refresh(db_deck)
 
 def delete_deck(db: Session, deck_id: int, auth0_id:str):
-    project = db.query(Deck).filter(Deck.id == deck_id).first()
-    db.delete(project)
+    db_deck = db.query(Deck).filter(Deck.id == deck_id).first()
+    db.delete(db_deck)
     db.commit()
 
 def edit_deck(db: Session, new_deck: DeckCreate, old_deck: int, auth0_id:str):
-    project = db.query(Deck).filter(Deck.id == old_deck).first()
-    project.name = new_deck.name
+    db_deck = db.query(Deck).filter(Deck.id == old_deck).first()
+    db_deck.name = new_deck.name
     db.commit()

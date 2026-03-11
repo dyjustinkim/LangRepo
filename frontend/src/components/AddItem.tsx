@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 interface addItemFormProps {
   label: string;
-  endpoint: string;
   onSuccess: (name: string) => void;
   
 }

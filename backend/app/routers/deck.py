@@ -8,8 +8,7 @@ router = APIRouter(prefix="/decks", tags=["decks"])
 
 @router.get("/{proj_id}", response_model=list[DeckResponse])
 def get_decks(proj_id: int, db: db_dependency, user=Depends(verify_user)):
-    decks = deck_crud.get_decks(proj_id, db, user)
-    return decks
+    return deck_crud.get_decks(proj_id, db, user)
 
 @router.post("")
 def add_deck(deck: DeckCreate, db: db_dependency, user=Depends(verify_user)):  

@@ -49,17 +49,32 @@ const DocList =({username}: DocListProps) => {
 
   const addDoc = async (docName: string) => {
     if (!file) return;
-
-    
+    console.log(file.type);
     try {
-      console.log(file!.name);
-      //const url = await authApi.post('/docs', { name: docName, project_id: projectId }, getAccessTokenSilently);
-      //fetchDocs(); 
-      setFile(null);
+      const signedUrl = await authApi.post('/docs', { name: docName, project_id: projectId, filename: file!.name}, getAccessTokenSilently);
+      try { const response = await fetch(signedUrl.data, {
+            method: "PUT",
+            headers: {
+      "Content-Type": "application/pdf"
+    },
+            body: file
+        }) 
+        if (!response.ok) {
+    const text = await response.text(); // get XML error from S3
+    console.error("Upload failed", response.status, text);
+  } else {
+    console.log("Upload successful!");
+  }
+} catch (err) {
+  console.error("Fetch error:", err);
+} 
 
+      fetchDocs(); 
+      setFile(null);
         if (fileInputRef.current) {
         fileInputRef.current.value = "";
         }
+        
     } catch (error) {
       console.error("Error adding Doc", error);
     }
@@ -67,7 +82,7 @@ const DocList =({username}: DocListProps) => {
 
   const editDoc = async (docId: string | number, newName: string) => {
       try {
-        authApi.put('/docs/'+docId, { name: newName, project_id: projectId }, getAccessTokenSilently);
+        await authApi.put('/docs/'+docId, { name: newName, project_id: projectId, filename: "" }, getAccessTokenSilently);
         fetchDocs(); 
       } catch (error) {
         console.error("Error editing Doc", error);
@@ -93,14 +108,7 @@ const DocList =({username}: DocListProps) => {
   }, []);
   useEffect(() => {
   if (projectId !== null) {
-    // fetchDocs();
-    const testDoc = {
-        id: 1,
-        name: "test"
-    }
-
-    setDocs([testDoc])
-
+    fetchDocs();
   }
 }, [projectId]);
 
@@ -115,7 +123,7 @@ const DocList =({username}: DocListProps) => {
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/profile/${project}/docs/${doc.name}`}>{doc.name}</Link>
+                <Link to={`/profile/${project}/docs/${doc.id}`}>{doc.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={doc.name} oldId={doc.id} onSuccess={editDoc}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteDoc(doc.id)}>Delete</Dropdown.Item>
@@ -125,7 +133,7 @@ const DocList =({username}: DocListProps) => {
           </ListGroup>
 
       <input type="file" ref={fileInputRef} onChange={handleFile} />
-      < AddItem label="Deck" endpoint="/decks" onSuccess={addDoc} />
+      < AddItem label="Doc" onSuccess={addDoc} />
       </Container>
     </div>
   );

@@ -10,6 +10,8 @@ from app.db.database import Base
 from app.routers.user import router as user_router
 from app.routers.project import router as project_router
 from app.routers.deck import router as deck_router
+from app.routers.doc import router as doc_router
+
 import app.models
 
 app = FastAPI()
@@ -31,6 +33,8 @@ app.add_middleware(
 app.include_router(user_router)
 app.include_router(project_router)
 app.include_router(deck_router)
+app.include_router(doc_router)
+
 
 
 

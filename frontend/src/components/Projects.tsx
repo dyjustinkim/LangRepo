@@ -81,7 +81,7 @@ const ProjectList = ({username}: ProjectListProps) => {
         ))}
           </ListGroup>
 
-      < AddItem label="Project" endpoint="/projects" onSuccess={addProject} />
+      < AddItem label="Project" onSuccess={addProject} />
       </Container>
     </div>
   );

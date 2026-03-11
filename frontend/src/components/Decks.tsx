@@ -99,7 +99,7 @@ const DeckList =({username}: DeckListProps) => {
         ))}
           </ListGroup>
 
-      < AddItem label="Deck" endpoint="/decks" onSuccess={addDeck} />
+      < AddItem label="Deck" onSuccess={addDeck} />
       </Container>
     </div>
   );

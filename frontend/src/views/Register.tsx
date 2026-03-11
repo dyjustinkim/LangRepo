@@ -29,7 +29,7 @@ export default function Register() {
           <h1> Welcome, new user!</h1>
           <h1> Choose your username:</h1>
           <div className="card">
-            <AddItem label = "new User" endpoint = "/users" onSuccess={addUsername}/>
+            <AddItem label = "new User" onSuccess={addUsername}/>
     
         </div>
         <div><LogoutButton/></div>

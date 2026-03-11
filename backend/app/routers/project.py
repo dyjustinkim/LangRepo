@@ -12,8 +12,7 @@ def map_project(db: db_dependency, project_name: str,  user=Depends(verify_user)
 
 @router.get("", response_model=list[ProjectResponse])
 def get_projects(db: db_dependency, user=Depends(verify_user)):
-    projects = project_crud.get_projects(db, user)
-    return projects
+    return project_crud.get_projects(db, user)
 
 @router.post("")
 def add_project(project: ProjectCreate, db: db_dependency, user=Depends(verify_user)):
