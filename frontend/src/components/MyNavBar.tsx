@@ -11,8 +11,7 @@ type MyNavBarProps = {
 function MyNavBar({username}: MyNavBarProps) {
   const {logout, isAuthenticated} = useAuth0();
   return (
-    <>
-      <br />
+    <div>
       <Navbar bg="light" data-bs-theme="light">
         <Container>
           <Navbar.Brand>LangRepo</Navbar.Brand>
@@ -27,7 +26,7 @@ function MyNavBar({username}: MyNavBarProps) {
           
         </Container>
       </Navbar>
-    </>
+    </div>
   );
 }
 

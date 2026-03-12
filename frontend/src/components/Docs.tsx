@@ -54,21 +54,17 @@ const DocList =({username}: DocListProps) => {
       const signedUrl = await authApi.post('/docs', { name: docName, project_id: projectId, filename: file!.name}, getAccessTokenSilently);
       try { const response = await fetch(signedUrl.data, {
             method: "PUT",
-            headers: {
-      "Content-Type": "application/pdf"
-    },
+            headers: {"Content-Type": "application/pdf"},
             body: file
         }) 
         if (!response.ok) {
-    const text = await response.text(); // get XML error from S3
-    console.error("Upload failed", response.status, text);
-  } else {
-    console.log("Upload successful!");
-  }
-} catch (err) {
-  console.error("Fetch error:", err);
-} 
-
+        const text = await response.text(); 
+        console.error("Upload failed", response.status, text);
+        } else {console.log("Upload successful!");
+        }
+        } catch (err) {
+        console.error("Fetch error:", err);
+        } 
       fetchDocs(); 
       setFile(null);
         if (fileInputRef.current) {

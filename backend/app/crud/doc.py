@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Session
 from app.models.doc import Doc
 from app.schemas.doc import DocCreate
-from app.services.s3_service import generate_presigned_url, delete_file
+from app.schemas.genflash import GenFlash
+
+from app.services.s3_service import generate_presigned_url, delete_file, read_doc
 
 def get_docs(proj_id: int, db: Session, auth0_id:str):
     docs = db.query(Doc).filter(Doc.project_id == proj_id).all()
@@ -13,7 +15,7 @@ def view_doc(doc_id: int, db: Session, auth0_id:str):
     url = generate_presigned_url(
         "get_object", key, 3600
     )
-    return {"url": url, "name": doc.name}
+    return {"url": url, "name": doc.name, "project_id": doc.project_id} 
 
 def add_doc(doc: DocCreate, db: Session, auth0_id:str):
     key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
@@ -40,3 +42,9 @@ def edit_doc(db: Session, new_doc: DocCreate, old_doc: int, auth0_id:str):
     db_doc = db.query(Doc).filter(Doc.id == old_doc).first()
     db_doc.name = new_doc.name
     db.commit()
+
+def generate_flashcards(info: GenFlash, db: Session, doc_id: int, auth0_id:str):
+    doc = db.query(Doc).filter(Doc.id == doc_id).first()
+    key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
+    pdf = read_doc(key)
+    

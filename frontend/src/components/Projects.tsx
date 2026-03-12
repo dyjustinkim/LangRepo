@@ -74,7 +74,7 @@ const ProjectList = ({username}: ProjectListProps) => {
             >
                 <Link to={`/profile/${project.name}`}>{project.name}</Link>
                 <DropdownButton title="Settings">
-                    <EditDialog oldName={project.name} oldId={project.id} onSuccess={editProject}>Edit</EditDialog>
+                    <EditDialog oldName={project.name} oldId={project.id} onSuccess={editProject}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteProject(project.id)}>Delete</Dropdown.Item>
                 </DropdownButton>              
               </ListGroup.Item>

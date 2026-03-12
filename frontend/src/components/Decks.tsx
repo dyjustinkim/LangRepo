@@ -92,7 +92,7 @@ const DeckList =({username}: DeckListProps) => {
             >
                 <Link to={`/profile/${project}/decks/${deck.name}`}>{deck.name}</Link>
                 <DropdownButton title="Settings">
-                    <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Edit</EditDialog>
+                    <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteDeck(deck.id)}>Delete</Dropdown.Item>
                 </DropdownButton>              
               </ListGroup.Item>

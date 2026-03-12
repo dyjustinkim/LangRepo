@@ -23,8 +23,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/authgate" element={<AuthGate />} />
           <Route path="/profile/:project" element={<Projects />} />
-          <Route path="/profile/:project/docs/:doc" element={<Docs />} />
-          <Route path="/profile/:project/decks/:deck" element={<Decks />} />
+          <Route path="/profile/:project/docs/:doc_id" element={<Docs />} />
+          <Route path="/profile/:project/decks/:deck_id" element={<Decks />} />
           <Route path="/profile/account" element={<Account />} />
               
         </Route>
