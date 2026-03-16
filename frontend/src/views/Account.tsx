@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/myNavBar.tsx';
 import { Container } from 'react-bootstrap';
-import AddItem from '../components/AddItem.tsx';
+import AddItem from '../components/AddItemForm.tsx';
 import EditDialog from '../components/EditDialog.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
-import AddItem from './AddItem.tsx';
+import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -90,7 +90,7 @@ const DeckList =({username}: DeckListProps) => {
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/profile/${project}/decks/${deck.name}`}>{deck.name}</Link>
+                <Link to={`/profile/${project}/decks/${deck.name}/study`}>{deck.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteDeck(deck.id)}>Delete</Dropdown.Item>

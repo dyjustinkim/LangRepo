@@ -3,13 +3,14 @@ import './index.css'
 import { Routes, Route } from "react-router-dom";
 import LoginButton from "./components/LoginButton"
 import LogoutButton from "./components/LogoutButton"
-import DeckList from './components/Decks'
+import DeckList from './components/DeckList'
 import Profile from './views/ProfileView'
 import Login from './views/Login'
 import AuthGate from './views/AuthGate'
 import Register from './views/Register'
 import Projects from './views/ProjectView'
 import Decks from './views/DeckView';
+import FlashcardViewer from './views/FlashcardView';
 import Account from './views/Account';
 import PrivateRoutes from './components/PrivateRoute';
 import Docs from './views/DocView';
@@ -24,7 +25,8 @@ function App() {
           <Route path="/authgate" element={<AuthGate />} />
           <Route path="/profile/:project" element={<Projects />} />
           <Route path="/profile/:project/docs/:doc_id" element={<Docs />} />
-          <Route path="/profile/:project/decks/:deck_id" element={<Decks />} />
+          <Route path="/profile/:project/decks/:deck_name/edit" element={<Decks />} />
+          <Route path="/profile/:project/decks/:deck_name/study" element={<FlashcardViewer />} />
           <Route path="/profile/account" element={<Account />} />
               
         </Route>

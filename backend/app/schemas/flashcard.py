@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
-class CardCreate(BaseModel):
+class FlashcardCreate(BaseModel):
     deck_id: int
     front: str
     back: str
 
-class CardResponse(BaseModel):
+class FlashcardResponse(BaseModel):
     id: int
     deck_id: int
     front: str

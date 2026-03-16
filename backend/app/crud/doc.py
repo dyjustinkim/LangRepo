@@ -3,9 +3,10 @@ from app.models.doc import Doc
 from app.schemas.doc import DocCreate
 from app.schemas.genflash import GenFlash
 
+
 from app.services.s3_service import generate_presigned_url, delete_file, read_doc
 from app.services.ai_service import call_bedrock
-
+from app.services.flashcard_service import bulk_save_objects
 
 def get_docs(proj_id: int, db: Session, auth0_id:str):
     docs = db.query(Doc).filter(Doc.project_id == proj_id).all()
@@ -50,5 +51,5 @@ def generate_flashcards(info: GenFlash, db: Session, doc_id: int, auth0_id:str):
     key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
     pdf = read_doc(key)
     flashcards = call_bedrock(pdf)
-    print(flashcards)
+    bulk_save_objects(flashcards, info.deck_id, db)
     

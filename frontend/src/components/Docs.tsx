@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import authApi from "../api/apiClient.ts";
-import AddItem from './AddItem.tsx';
+import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

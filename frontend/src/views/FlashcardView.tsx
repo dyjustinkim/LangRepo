@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
 import MyNavBar from '../components/myNavBar.tsx';
-import FlashcardList from '../components/FlashcardList.tsx';
+import FlashcardPlayer from '../components/FlashcardPlayer.tsx';
 
-export default function Flashcards() {
+export default function FlashcardViewer() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [projectId, setProjectId] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');
@@ -32,7 +32,7 @@ export default function Flashcards() {
     <>
         <MyNavBar username={username}></MyNavBar>
           <div className="card">
-            <FlashcardList username={username}/>
+            <FlashcardPlayer></FlashcardPlayer>
         </div>
 
 

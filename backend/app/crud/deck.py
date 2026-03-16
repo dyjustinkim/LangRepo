@@ -6,6 +6,10 @@ def get_decks(proj_id: int, db: Session, auth0_id:str):
     decks = db.query(Deck).filter(Deck.project_id == proj_id).all()
     return decks
 
+def map_deck(deck_name: int, db: Session, auth0_id:str):
+    deck = db.query(Deck).filter(Deck.name == deck_name).first()
+    return deck
+
 def add_deck(deck: DeckCreate, db: Session, auth0_id:str):
     db_deck = Deck(name=deck.name, project_id = deck.project_id)  
     db.add(db_deck)

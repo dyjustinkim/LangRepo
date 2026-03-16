@@ -1,8 +1,10 @@
 import boto3
 import json
+import re
 
 from botocore.exceptions import ClientError
 from app.core.settings import settings
+
 
 bedrock = boto3.client(
     "bedrock-runtime", 
@@ -60,10 +62,15 @@ def call_bedrock(document):
     response_body = json.loads(response['body'].read())
     content_list = response_body["output"]["message"]["content"]
     text_block = next((item for item in content_list if "text" in item), None)
+
     if text_block is not None:
-        return text_block["text"]
-    else:
-        return "Error: Failed to call bedrock"
+        clean = re.sub(r"```json|```", "", text_block["text"]).strip()
+        try: 
+            return json.loads(clean)
+        except json.JSONDecoreError: 
+            return "Error: Failed to call bedrock"
+
+    return "Error: Failed to call bedrock"
 
 
 

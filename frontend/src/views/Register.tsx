@@ -1,7 +1,7 @@
-import DeckList from '../components/Decks'
+import DeckList from '../components/DeckList'
 import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton';
-import AddItem from '../components/AddItem';
+import AddItem from '../components/AddItemForm';
 import authApi from '../api/apiClient';
 import {useNavigate, Navigate } from 'react-router-dom';
 

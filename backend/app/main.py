@@ -11,6 +11,8 @@ from app.routers.user import router as user_router
 from app.routers.project import router as project_router
 from app.routers.deck import router as deck_router
 from app.routers.doc import router as doc_router
+from app.routers.flashcard import router as flashcard_router
+
 
 import app.models
 
@@ -34,6 +36,8 @@ app.include_router(user_router)
 app.include_router(project_router)
 app.include_router(deck_router)
 app.include_router(doc_router)
+app.include_router(flashcard_router)
+
 
 
 
