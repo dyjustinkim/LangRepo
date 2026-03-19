@@ -45,3 +45,4 @@ https://medium.com/@aberrospic1/crud-operations-with-fastapi-c2de026e5862 # CRUD
 https://dev.to/gilly7/building-your-first-full-stack-crud-app-with-fastapi-and-reactjs-3i1n # CRUD walkthrough
 https://react-bootstrap.netlify.app/docs/components/navbar/ # React NavBar component
 https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c # Private routes
+https://docs.aws.amazon.com/nova/latest/userguide/using-invoke-api.html # Amazon Bedrock Nova model Invoke API Documentation
