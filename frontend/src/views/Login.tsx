@@ -1,19 +1,20 @@
 import LoginButton from '../components/LoginButton'
+import logo from '../assets/langrepoimg.png'
 
-
-export default function Login() {
+export default function Login() {   
+    const image = {logo}
 
     return (
     
-    <>
-        <div>
-          </div>
-          <h1>LangRepo Prototype!!</h1>
+    <div className="my-container">
+        
           <div className="card">
-            <LoginButton />
-
+            <h1 style={{ fontSize: "3rem" }}>Welcome to LangRepo!</h1>
+            <p style={{ fontSize: "1.5rem" }}> Upload documents, generate flashcards, and study efficiently</p>
+            <img src={image.logo} alt="Logo" className="logo"/>
+            <LoginButton/>
         </div>
-    </>
+    </div>
     
     )
 }

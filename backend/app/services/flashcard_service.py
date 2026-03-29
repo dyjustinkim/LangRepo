@@ -12,4 +12,5 @@ def bulk_save_objects(data, deck_id, db):
 
     db.add_all(flashcards)
     db.commit()
+    return "Success!"
 

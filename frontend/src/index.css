@@ -1,11 +1,35 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+.my-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  padding-top: 2rem;        
+  gap: 1.5rem 
 }
 
 
 .card {
-  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 1000px;              
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  gap: 1rem
 }
+
+
+
+
+.logo {
+  width: 250px;   
+  height: auto;   
+  margin-bottom: 1.5rem; 
+}
+

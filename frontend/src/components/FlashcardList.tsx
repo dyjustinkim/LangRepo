@@ -21,20 +21,21 @@ type FlashcardListProps = {
   username: string;
 };
 
-const FlashcardList =({username}: FlashcardListProps) => {
+const FlashcardList = () => {
   const [flashcards, setFlashcards] = useState<flashcard[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{project, deck_name} = useParams();
+  const{project, deck_id} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
-  const [deckId, setDeckId] = useState<number | null>(null);
+  const [deckName, setDeckName] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  
 
   const navigate = useNavigate();
 
   const fetchFlashcards = async () => {
     try {
-      const response = await authApi.get('/flashcards/' + deckId, getAccessTokenSilently);
+      const response = await authApi.get('/flashcards/' + deck_id, getAccessTokenSilently);
       setFlashcards(response.data);
     } catch (error) {
       console.error("Error fetching Flashcards", error);
@@ -54,7 +55,7 @@ const FlashcardList =({username}: FlashcardListProps) => {
 
   const addFlashcard = async (front: string, back: string) => {
     try {
-      await authApi.post('/flashcards', { front, back, deck_id: deckId}, getAccessTokenSilently);
+      await authApi.post('/flashcards', { front, back, deck_id}, getAccessTokenSilently);
       fetchFlashcards(); 
     } catch (error) {
       console.error("Error adding Flashcard", error);
@@ -65,7 +66,7 @@ const FlashcardList =({username}: FlashcardListProps) => {
 
   const editFlashcard = async (front: string, back: string, flashcardId: number | undefined) => {
       try {
-        await authApi.put('/flashcards/'+flashcardId, {front, back, deck_id: deckId}, getAccessTokenSilently);
+        await authApi.put('/flashcards/'+flashcardId, {front, back, deck_id}, getAccessTokenSilently);
         fetchFlashcards(); 
       } catch (error) {
         console.error("Error editing Flashcard", error);
@@ -79,25 +80,22 @@ const FlashcardList =({username}: FlashcardListProps) => {
     setProjectId(response.data.project_id);
     };
 
-  async function getDeckId() {
+  async function getDeckName() {
             
-    const response = await authApi.get('/decks/map/'+ deck_name, getAccessTokenSilently);
-    setDeckId(response.data.id);
+    const response = await authApi.get('/decks/map/'+ deck_id, getAccessTokenSilently);
+    setDeckName(response.data.name);
     }
 
   useEffect(() => {
     getProjectId();
-    getDeckId();
-  }, []);
-  useEffect(() => {
-  if (deckId !== null) {
+    getDeckName();
     fetchFlashcards();
-  }
-}, [deckId]);
+  }, []);
+ 
 
   return (
     <div>
-      <h2>{project} {deck_name} Flashcards List</h2> 
+      <h2>{project}: {deckName} Flashcards List</h2> 
         <Container>
             <table className="table">
             <thead>
@@ -132,13 +130,13 @@ const FlashcardList =({username}: FlashcardListProps) => {
         </table>
 
         <div className="d-flex justify-content-evenly mt-3">
-            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_name}/study`)}>Study Flashcards</Button>
-            <Button onClick={() => setShowAdd(true)}>Add Flashcard</Button>
+            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_id}/study`)}>Study Flashcards</Button>
+            <Button onClick={() => setShowAdd(true)}>Add Flashcards</Button>
 
             <FlashcardDialog
             show={showAdd}
             onHide={() => setShowAdd(false)}
-            label="Add Flashcard"
+            label="Add Flashcards"
             onSuccess={addFlashcard}
             />
 

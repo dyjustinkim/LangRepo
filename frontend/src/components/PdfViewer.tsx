@@ -3,7 +3,7 @@ function PdfViewer({ url, loadingFunc }: { url: string, loadingFunc: (state: boo
     <iframe
       src={url}
       onLoad={() => loadingFunc(false)}
-      width="100%"
+      width="800px"
       height="600px"
       style={{ border: "none" }}
       title="PDF Viewer"

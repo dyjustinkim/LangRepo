@@ -29,4 +29,4 @@ def edit_doc(new_doc: DocCreate, db: db_dependency, old_doc: int,  user=Depends(
 
 @router.post("/{doc_id}/generate")
 def generate_flashcards(info: GenFlash, db: db_dependency, doc_id: int,  user=Depends(verify_user)):
-    doc_crud.generate_flashcards(info, db, doc_id, user)
+    return doc_crud.generate_flashcards(info, db, doc_id, user)

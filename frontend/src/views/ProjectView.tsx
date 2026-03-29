@@ -31,10 +31,8 @@ export default function Decks() {
     
     <>
         <MyNavBar username={username}></MyNavBar>
-          <div className="card">
+        <div className="my-container">
             <DeckList username={username}/>
-        </div>
-        <div className="card">
             <DocList username={username}/>
         </div>
     </>

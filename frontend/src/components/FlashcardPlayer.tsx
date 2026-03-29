@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import {Container, ListGroup, DropdownButton, Dropdown, Button, DropdownItem} from "react-bootstrap";
 import EditDialog from './EditDialog.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
+import Flashcard from './Flashcard.tsx';
 
 interface flashcard {
   id: number
@@ -20,135 +21,62 @@ interface flashcard {
 const FlashcardPlayer =() => {
   const [flashcards, setFlashcards] = useState<flashcard[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{project, deck_name} = useParams();
+  const{project, deck_id} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
-  const [deckId, setDeckId] = useState<number | null>(null);
+  const [deckName, setDeckName] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [currentFlashcard, setCurrentFlashcard] = useState<flashcard | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const navigate = useNavigate();
 
-  /*
+  
   const fetchFlashcards = async () => {
     try {
-      const response = await authApi.get('/flashcards/' + deckId, getAccessTokenSilently);
+      const response = await authApi.get('/flashcards/' + deck_id, getAccessTokenSilently);
       setFlashcards(response.data);
     } catch (error) {
       console.error("Error fetching Flashcards", error);
     }
-  };
+  };  
 
-  
-  const deleteFlashcard = async (flashcardId: number) => {
-      try {
-        const response = await authApi.delete('/flashcards/'+flashcardId, getAccessTokenSilently);
-        fetchFlashcards(); 
-      } catch (error) {
-        console.error("Error deleting Flashcard", error);
-      }
-    };
-    
 
-  const addFlashcard = async (front: string, back: string) => {
-    try {
-      await authApi.post('/flashcards', { front, back, deck_id: deckId}, getAccessTokenSilently);
-      fetchFlashcards(); 
-    } catch (error) {
-      console.error("Error adding Flashcard", error);
-    }
-  };
-
-  
-
-  const editFlashcard = async (front: string, back: string, flashcardId: number | undefined) => {
-      try {
-        await authApi.put('/flashcards/'+flashcardId, {front, back, deck_id: deckId}, getAccessTokenSilently);
-        fetchFlashcards(); 
-      } catch (error) {
-        console.error("Error editing Flashcard", error);
-      }
-    }; 
-  
-
-  async function getProjectId() {
+  async function getDeckName() {
             
-    const response = await authApi.get('/projects/'+project, getAccessTokenSilently);
-    setProjectId(response.data.project_id);
-    };
-
-  async function getDeckId() {
-            
-    const response = await authApi.get('/decks/map/'+ deck_name, getAccessTokenSilently);
-    setDeckId(response.data.id);
+    const response = await authApi.get('/decks/map/'+ deck_id, getAccessTokenSilently);
+    setDeckName(response.data.name);
     }
 
   useEffect(() => {
-    getProjectId();
-    getDeckId();
-  }, []);
-  useEffect(() => {
-  if (deckId !== null) {
+    getDeckName();
     fetchFlashcards();
-  }
-}, [deckId]);
-*/
+  }, []); 
+
+
+
+  useEffect(() => {
+    if (flashcards && flashcards.length > 0) {
+      setCurrentIndex(0);
+      setCurrentFlashcard(flashcards[0]);
+    }
+  }, [flashcards]);
+
   return (
     <div>
-      <h2>{project} {deck_name} Flashcards</h2> 
+      <h2>{project}: {deckName} Flashcards</h2> 
         <Container>
-            
+            {currentFlashcard && 
+              (<Flashcard front={currentFlashcard!.front} back={currentFlashcard!.back}></Flashcard>)}
 
-            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_name}/edit`)}>Edit Flashcards</Button>
+            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_id}/edit`)}>Edit Flashcards</Button>
         </Container>
         
     </div>
   );
 };
 
-/*<table className="table">
-            <thead>
-                <tr>
-                <th>Front</th>
-                <th>Back</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                {flashcards.map((card) => (
-                <tr key={card.id}>
-                    <td>{card.front}</td>
-                    <td>{card.back}</td>
-                    <DropdownButton title="Settings">
-                        <DropdownItem onClick={() => setShowEdit(true)}>Edit Flashcard</DropdownItem>
-                        <FlashcardDialog
-                        show={showEdit}
-                        onHide={() => setShowEdit(false)}
-                        label="Edit Flashcard"
-                        flashcard_id={card.id}
-                        onSuccess={editFlashcard}
-                        oldFront={card.front}
-                        oldBack={card.back}
-                        />
-
-                        <Dropdown.Item onClick={() => deleteFlashcard(card.id)}>Delete</Dropdown.Item>
-                    </DropdownButton>  
-                </tr>
-                ))}
-            </tbody>
-        </table>
-
-        <div className="d-flex justify-content-evenly mt-3">
-            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_name}/study`)}>Study Flashcards</Button>
-            <Button onClick={() => setShowAdd(true)}>Add Flashcard</Button>
-
-            <FlashcardDialog
-            show={showAdd}
-            onHide={() => setShowAdd(false)}
-            label="Add Flashcard"
-            onSuccess={addFlashcard}
-            />
-
-        </div> */
 
 
 export default FlashcardPlayer;

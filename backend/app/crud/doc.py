@@ -51,5 +51,5 @@ def generate_flashcards(info: GenFlash, db: Session, doc_id: int, auth0_id:str):
     key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
     pdf = read_doc(key)
     flashcards = call_bedrock(pdf)
-    bulk_save_objects(flashcards, info.deck_id, db)
+    return bulk_save_objects(flashcards, info.deck_id, db)
     

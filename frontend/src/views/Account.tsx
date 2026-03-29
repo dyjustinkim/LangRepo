@@ -42,14 +42,19 @@ export default function Account() {
       };
     
       return (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder={"Enter new username"}
-          />
-          <button type="submit">Update</button>
+        <form className="p-4" onSubmit={handleSubmit}>
+          <div className="d-flex gap-2">
+            <input
+            className="form-control flex-grow-1"
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={"Enter new username"}
+            />
+            <button className="btn btn-primary text-nowrap" type="submit">Update</button>
+          </div>
         </form>
+
+        
       );
     };
 
@@ -72,13 +77,12 @@ export default function Account() {
     
     <>
         <MyNavBar username={username}></MyNavBar>
-
+        <div className="my-container">
         <div className="card">
-            <h2>Account Settings</h2>
-            <h2>Current Username: {username}</h2>
-      <Container>
+            <h2 style={{ fontSize: "2rem" }}>Account Settings</h2>
+            <p style={{ fontSize: "1.6rem" }}>Current Username: <span style={{ color: "blue" }}>{username}</span></p>
         < EditName/>
-        </Container>
+        </div>
         </div>
 
     

@@ -31,9 +31,11 @@ export default function FlashcardViewer() {
     
     <>
         <MyNavBar username={username}></MyNavBar>
-          <div className="card">
-            <FlashcardPlayer></FlashcardPlayer>
-        </div>
+          <div className="my-container">
+            <div className="card">
+              <FlashcardPlayer></FlashcardPlayer>
+            </div>
+          </div>
 
 
 

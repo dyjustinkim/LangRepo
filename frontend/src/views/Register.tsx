@@ -4,6 +4,7 @@ import LogoutButton from '../components/LogoutButton';
 import AddItem from '../components/AddItemForm';
 import authApi from '../api/apiClient';
 import {useNavigate, Navigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 
 
 
@@ -13,7 +14,6 @@ export default function Register() {
     const addUsername = async (username: string) => {
         try {
           await authApi.post('/users', {username: username, user_id: " "}, getAccessTokenSilently);
-          // user_id handled by backend
         } catch (error) {
           console.error("Error adding Username", error);
         }
@@ -23,17 +23,16 @@ export default function Register() {
     return (
     
     <>
-        <div>
-          </div>
-          <h1>LangRepo Prototype!!</h1>
-          <h1> Welcome, new user!</h1>
-          <h1> Choose your username:</h1>
+        <div className="my-container"
+      >
           <div className="card">
-            <AddItem label = "new User" onSuccess={addUsername}/>
+            <h1 > Welcome, new user!</h1>
+          <h2> Choose your username:</h2>
+            <AddItem label = "new user" onSuccess={addUsername}/>
     
         </div>
         <div><LogoutButton/></div>
-        
+      </div>
     </>
     
     )

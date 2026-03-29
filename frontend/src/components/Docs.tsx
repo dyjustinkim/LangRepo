@@ -9,7 +9,7 @@ import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import EditDialog from './EditDialog.tsx';
-
+import DocDialog from './DocumentDialog.tsx';
 
 interface doc {
   id: number
@@ -22,8 +22,6 @@ type DocListProps = {
 
 const DocList =({username}: DocListProps) => {
   const [docs, setDocs] = useState<doc[]>([]);
-  const [file, setFile] = useState<File | null>(null)
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { getAccessTokenSilently } = useAuth0();
   const{project, doc} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
@@ -47,9 +45,7 @@ const DocList =({username}: DocListProps) => {
       }
     };
 
-  const addDoc = async (docName: string) => {
-    if (!file) return;
-    console.log(file.type);
+  const addDoc = async (file: File | null, docName: string) => {
     try {
       const signedUrl = await authApi.post('/docs', { name: docName, project_id: projectId, filename: file!.name}, getAccessTokenSilently);
       try { const response = await fetch(signedUrl.data, {
@@ -66,10 +62,7 @@ const DocList =({username}: DocListProps) => {
         console.error("Fetch error:", err);
         } 
       fetchDocs(); 
-      setFile(null);
-        if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-        }
+  
         
     } catch (error) {
       console.error("Error adding Doc", error);
@@ -84,13 +77,6 @@ const DocList =({username}: DocListProps) => {
         console.error("Error editing Doc", error);
       }
     };
-
-
-  const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setFile(event.target.files[0]);
-    }
-  }
 
 
   async function getProjectId() {
@@ -109,28 +95,26 @@ const DocList =({username}: DocListProps) => {
 }, [projectId]);
 
   return (
-    <div>
-      <h2>Project: {project} Docs List</h2>
-      <Container>
+    <div className="card">
+      <h2>{project}: Documents</h2>
   
-          <ListGroup>
+          <ListGroup style={{width:"80%"}}>
             {docs.map((doc, index) => (
             <ListGroup.Item 
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/profile/${project}/docs/${doc.id}`}>{doc.name}</Link>
+                <Link to={`/profile/${project}/docs/${doc.id}`} style={{fontSize:"1.2rem", fontWeight: "bold"}}>{doc.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={doc.name} oldId={doc.id} onSuccess={editDoc}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteDoc(doc.id)}>Delete</Dropdown.Item>
-                </DropdownButton>              
+                </DropdownButton>        
               </ListGroup.Item>
         ))}
           </ListGroup>
 
-      <input type="file" ref={fileInputRef} onChange={handleFile} />
-      < AddItem label="Doc" onSuccess={addDoc} />
-      </Container>
+      <DocDialog onSuccess={addDoc}></DocDialog>
+      
     </div>
   );
 };

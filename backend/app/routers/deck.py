@@ -10,9 +10,9 @@ router = APIRouter(prefix="/decks", tags=["decks"])
 def get_decks(proj_id: int, db: db_dependency, user=Depends(verify_user)):
     return deck_crud.get_decks(proj_id, db, user)
 
-@router.get("/map/{deck_name}", response_model=DeckResponse)
-def map_deck(deck_name: str, db: db_dependency, user=Depends(verify_user)):
-    return deck_crud.map_deck(deck_name, db, user)
+@router.get("/map/{deck_id}", response_model=DeckResponse)
+def map_deck(deck_id: str, db: db_dependency, user=Depends(verify_user)):
+    return deck_crud.map_deck(deck_id, db, user)
 
 @router.post("")
 def add_deck(deck: DeckCreate, db: db_dependency, user=Depends(verify_user)):  

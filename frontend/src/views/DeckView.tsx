@@ -31,8 +31,10 @@ export default function Flashcards() {
     
     <>
         <MyNavBar username={username}></MyNavBar>
+        <div className="my-container">
           <div className="card">
-            <FlashcardList username={username}/>
+            <FlashcardList/>
+          </div>
         </div>
 
 

@@ -31,9 +31,8 @@ export default function Projects() {
     
     <>
         <MyNavBar username={username}></MyNavBar>
- 
-          <div className="card">
-            <ProjectList username={username}/>
+        <div className="my-container">
+          <ProjectList username={username}/>
         </div>
     </>
     

@@ -18,14 +18,17 @@ const addItem: React.FC<addItemFormProps> = ({ label, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={itemName}
-        onChange={(e) => setItemName(e.target.value)}
-        placeholder={"Enter " + label + " name"}
-      />
-      <button type="submit">Add {label}</button>
+    <form className="p-4" onSubmit={handleSubmit}>
+      <div className="d-flex gap-2">
+        <input
+          className="form-control flex-grow-1"
+          type="text"
+          value={itemName}
+          onChange={(e) => setItemName(e.target.value)}
+          placeholder={"Enter " + label + " name"}
+        />
+        <button className="btn btn-primary text-nowrap" type="submit">Add {label}</button>
+      </div>
     </form>
   );
 };

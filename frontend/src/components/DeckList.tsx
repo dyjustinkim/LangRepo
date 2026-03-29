@@ -80,17 +80,16 @@ const DeckList =({username}: DeckListProps) => {
 }, [projectId]);
 
   return (
-    <div>
-      <h2>Project: {project} Decks List</h2>
-      <Container>
+    <div className="card">
+      <h2>{project}: Flashcard Decks</h2>
   
-          <ListGroup>
+          <ListGroup style={{width:"80%"}}>
             {decks.map((deck, index) => (
             <ListGroup.Item 
             key={index}
             className = "d-flex justify-content-between align-items-center"
             >
-                <Link to={`/profile/${project}/decks/${deck.name}/study`}>{deck.name}</Link>
+                <Link to={`/profile/${project}/decks/${deck.id}/study`} style={{fontSize: "1.2rem", fontWeight: "bold"}} >{deck.name}</Link>
                 <DropdownButton title="Settings">
                     <EditDialog oldName={deck.name} oldId={deck.id} onSuccess={editDeck}>Rename</EditDialog>
                     <Dropdown.Item onClick={() => deleteDeck(deck.id)}>Delete</Dropdown.Item>
@@ -100,7 +99,6 @@ const DeckList =({username}: DeckListProps) => {
           </ListGroup>
 
       < AddItem label="Deck" onSuccess={addDeck} />
-      </Container>
     </div>
   );
 };

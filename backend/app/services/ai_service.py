@@ -15,18 +15,20 @@ bedrock = boto3.client(
 def call_bedrock(document):
     prompt = """
     Given the below document, extract the appropriate information (question and comprehensive answer)
-    required to produce flashcards. Then, output the information following the below format EXACTLY:
+    required to produce flashcards. Only extract the most relevant information, or what you judge should 
+    correspond to clear words and definitions, NOT every single word in the document.
+    Then, output the information following the below format EXACTLY:
 
-    Format:
+    Format/examples (Do not include these sample flashcards in answer):
         {
         "flashcards": [
             {
-            "question": "What is evaporation?",
-            "answer": "The process where liquid water turns into vapor."
+            "question": "Plural"
+            "answer": "Containing several elements"
             },
             {
-            "question": "What is condensation?",
-            "answer": "The process where water vapor cools and becomes liquid."
+            "question": "开始",
+            "answer": "To start/begin"
             }
         ]
         }
@@ -34,7 +36,6 @@ def call_bedrock(document):
 
 
     Document:
-    
     """
     
     check = "Double check to make the sure format is a valid json and contains all required fields."
@@ -67,7 +68,7 @@ def call_bedrock(document):
         clean = re.sub(r"```json|```", "", text_block["text"]).strip()
         try: 
             return json.loads(clean)
-        except json.JSONDecoreError: 
+        except json.JSONDecodeError: 
             return "Error: Failed to call bedrock"
 
     return "Error: Failed to call bedrock"
