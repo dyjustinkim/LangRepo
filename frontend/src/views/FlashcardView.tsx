@@ -3,6 +3,7 @@ import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
+import {useNavigate, Navigate } from 'react-router-dom';
 import MyNavBar from '../components/myNavBar.tsx';
 import FlashcardPlayer from '../components/FlashcardPlayer.tsx';
 
@@ -10,6 +11,8 @@ export default function FlashcardViewer() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [projectId, setProjectId] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');
+    const navigate = useNavigate();
+    const{project} = useParams();
         
       if (isLoading) {
         return <div>Loading profile...</div>
@@ -32,9 +35,18 @@ export default function FlashcardViewer() {
     <>
         <MyNavBar username={username}></MyNavBar>
           <div className="my-container">
-            <div className="card">
               <FlashcardPlayer></FlashcardPlayer>
-            </div>
+            
+            <div>
+            <span
+              className="text-muted fs-6"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/profile/${project}`)}
+            >
+              ← Back to Project View
+            </span>
+          </div>
+
           </div>
 
 

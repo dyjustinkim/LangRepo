@@ -5,11 +5,15 @@ import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
 import MyNavBar from '../components/myNavBar.tsx';
 import FlashcardList from '../components/FlashcardList.tsx';
+import { Link } from "react-router-dom";
+import {useNavigate, Navigate } from 'react-router-dom';
 
 export default function Flashcards() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [projectId, setProjectId] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');
+    const navigate = useNavigate();
+    const{project} = useParams();
         
       if (isLoading) {
         return <div>Loading profile...</div>
@@ -32,8 +36,16 @@ export default function Flashcards() {
     <>
         <MyNavBar username={username}></MyNavBar>
         <div className="my-container">
-          <div className="card">
             <FlashcardList/>
+
+          <div>
+            <span
+              className="text-muted fs-6"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/profile/${project}`)}
+            >
+              ← Back to Project View
+            </span>
           </div>
         </div>
 

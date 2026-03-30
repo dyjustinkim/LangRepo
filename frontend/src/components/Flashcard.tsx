@@ -3,21 +3,21 @@ import React, { useState } from 'react';
 interface FlashcardProps {
   front: string;
   back: string;
+  isFlipped: boolean;
+  setIsFlipped: (prev: boolean) => void
 }
 
-const Flashcard: React.FC<FlashcardProps> = ({ front, back }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+const Flashcard: React.FC<FlashcardProps> = ({ front, back, isFlipped, setIsFlipped }) => {
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
 
   const cardStyle: React.CSSProperties = {
-    width: '300px',
-    height: '200px',
+    width: '60%',
+    height: '300px',
     perspective: '1000px',
     cursor: 'pointer',
-    margin: '20px auto'
   };
 
   const innerStyle: React.CSSProperties = {

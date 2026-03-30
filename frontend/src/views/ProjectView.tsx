@@ -4,11 +4,14 @@ import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/myNavBar.tsx';
 import DocList from '../components/Docs.tsx';
+import {useNavigate, Navigate } from 'react-router-dom';
+
 
 export default function Decks() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [projectId, setProjectId] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');    
+    const navigate = useNavigate();
 
       if (isLoading) {
         return <div>Loading profile...</div>
@@ -34,7 +37,17 @@ export default function Decks() {
         <div className="my-container">
             <DeckList username={username}/>
             <DocList username={username}/>
-        </div>
+
+            <div>
+                <span
+                  className="text-muted fs-6"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/profile`)}
+                >
+                  ← Back to Profile View
+                </span>
+              </div>
+            </div>
     </>
     
     )

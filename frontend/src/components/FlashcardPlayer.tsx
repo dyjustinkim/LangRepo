@@ -26,8 +26,8 @@ const FlashcardPlayer =() => {
   const [deckName, setDeckName] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [currentFlashcard, setCurrentFlashcard] = useState<flashcard | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +48,20 @@ const FlashcardPlayer =() => {
     setDeckName(response.data.name);
     }
 
+  const handlePrev = () => {
+  if (currentIndex > 0) {
+    setCurrentIndex(currentIndex - 1);
+    setIsFlipped(false)
+  }
+};
+
+const handleNext = () => {
+  if (currentIndex < flashcards.length - 1) {
+    setCurrentIndex(currentIndex + 1);
+    setIsFlipped(false)
+  }
+};
+
   useEffect(() => {
     getDeckName();
     fetchFlashcards();
@@ -58,21 +72,54 @@ const FlashcardPlayer =() => {
   useEffect(() => {
     if (flashcards && flashcards.length > 0) {
       setCurrentIndex(0);
-      setCurrentFlashcard(flashcards[0]);
     }
   }, [flashcards]);
 
   return (
-    <div>
+    <div className="card w-100">
       <h2>{project}: {deckName} Flashcards</h2> 
-        <Container>
-            {currentFlashcard && 
-              (<Flashcard front={currentFlashcard!.front} back={currentFlashcard!.back}></Flashcard>)}
+      <>
+        <span className={`text-muted`} >
+            {currentIndex + 1}/{flashcards.length}
+          </span>
+        {flashcards[currentIndex] && 
+        (<Flashcard 
+        key={currentIndex}
+        front={flashcards[currentIndex]!.front} 
+        back={flashcards[currentIndex]!.back}
+        isFlipped={isFlipped}
+        setIsFlipped={setIsFlipped}>
+        </Flashcard>)}
+        <div style={{width: '55%'}} className="d-flex justify-content-between">
+          <span
+            className={`text-muted small ${currentIndex === 0 ? "disabled-link" : ""}`}
+            style={{ cursor: currentIndex === 0 ? "not-allowed" : "pointer" }}
+            onClick={handlePrev}
+          >
+            ← Previous
+          </span>
+          <span
+            className={`text-muted small ${
+              currentIndex === flashcards.length - 1 ? "disabled-link" : ""
+            }`}
+            style={{
+              cursor:
+                currentIndex === flashcards.length - 1 ? "not-allowed" : "pointer",
+            }}
+            onClick={handleNext}
+          >
+            Next →
+          </span>
+        </div>
 
+        <div className="d-flex gap-4 align-items-center">
+            <Button >Shuffle Flashcards</Button>
             <Button onClick={() => navigate(`/profile/${project}/decks/${deck_id}/edit`)}>Edit Flashcards</Button>
-        </Container>
+        </div>
+      </>
         
     </div>
+    
   );
 };
 

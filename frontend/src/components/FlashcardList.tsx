@@ -94,7 +94,7 @@ const FlashcardList = () => {
  
 
   return (
-    <div>
+    <div className="card">
       <h2>{project}: {deckName} Flashcards List</h2> 
         <Container>
             <table className="table">
