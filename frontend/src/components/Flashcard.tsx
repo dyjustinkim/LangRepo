@@ -14,7 +14,7 @@ const Flashcard: React.FC<FlashcardProps> = ({ front, back, isFlipped, setIsFlip
   };
 
   const cardStyle: React.CSSProperties = {
-    width: '60%',
+    width: '600px',
     height: '300px',
     perspective: '1000px',
     cursor: 'pointer',
@@ -57,11 +57,11 @@ const Flashcard: React.FC<FlashcardProps> = ({ front, back, isFlipped, setIsFlip
     <div style={cardStyle} onClick={handleFlip}>
       <div style={innerStyle}>
         <div style={sideStyle}>
-          {front}
+          <h4>{front}</h4>
         </div>
 
         <div style={backSideStyle}>
-          {back}
+          <h4>{back}</h4>
         </div>
       </div>
     </div>

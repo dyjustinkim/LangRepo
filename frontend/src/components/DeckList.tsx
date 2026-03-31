@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import {ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import EditDialog from './EditDialog.tsx';
 
 
@@ -80,6 +78,11 @@ const DeckList =({username}: DeckListProps) => {
 }, [projectId]);
 
   return (
+    !decks ? (
+    <>
+      <h4>Loading decks...</h4>
+    </>
+  ) : (
     <div className="card">
       <h2>{project}: Flashcard Decks</h2>
   
@@ -100,6 +103,7 @@ const DeckList =({username}: DeckListProps) => {
 
       < AddItem label="Deck" onSuccess={addDeck} />
     </div>
+  )
   );
 };
 

@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
-import FlashcardDialog from "./FlashcardDialog.tsx"
 import { useAuth0 } from "@auth0/auth0-react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import {Container, ListGroup, DropdownButton, Dropdown, Button, DropdownItem} from "react-bootstrap";
-import EditDialog from './EditDialog.tsx';
+import {Button} from "react-bootstrap";
 import {useNavigate, Navigate } from 'react-router-dom';
 import Flashcard from './Flashcard.tsx';
 
@@ -28,16 +23,29 @@ const FlashcardPlayer =() => {
   const [showEdit, setShowEdit] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [loading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
-  
+  function shuffleCards() {
+    const shuffled = [...flashcards];
+    setCurrentIndex(0)
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    setFlashcards(shuffled);
+  }
+    
   const fetchFlashcards = async () => {
     try {
       const response = await authApi.get('/flashcards/' + deck_id, getAccessTokenSilently);
       setFlashcards(response.data);
+      return response.data;
     } catch (error) {
       console.error("Error fetching Flashcards", error);
+      return null;
     }
   };  
 
@@ -46,6 +54,7 @@ const FlashcardPlayer =() => {
             
     const response = await authApi.get('/decks/map/'+ deck_id, getAccessTokenSilently);
     setDeckName(response.data.name);
+    return ("Success")
     }
 
   const handlePrev = () => {
@@ -63,10 +72,19 @@ const handleNext = () => {
 };
 
   useEffect(() => {
-    getDeckName();
-    fetchFlashcards();
-  }, []); 
+    const load = async () => {
+      const data = await fetchFlashcards();
 
+      if (data && data.length === 0) {
+        navigate(`/profile/${project}/decks/${deck_id}/edit`);
+      }
+      await getDeckName();
+      setIsLoading(false);
+    };
+
+    load();
+
+  }, []); 
 
 
   useEffect(() => {
@@ -76,6 +94,14 @@ const handleNext = () => {
   }, [flashcards]);
 
   return (
+    loading ? (
+    <>
+      <h4> Loading flashcards... </h4>
+    </>
+  ) : flashcards.length === 0 ? (
+      <></>
+  ) : (
+    
     <div className="card w-100">
       <h2>{project}: {deckName} Flashcards</h2> 
       <>
@@ -90,7 +116,7 @@ const handleNext = () => {
         isFlipped={isFlipped}
         setIsFlipped={setIsFlipped}>
         </Flashcard>)}
-        <div style={{width: '55%'}} className="d-flex justify-content-between">
+        <div style={{width: '580px'}} className="d-flex justify-content-between">
           <span
             className={`text-muted small ${currentIndex === 0 ? "disabled-link" : ""}`}
             style={{ cursor: currentIndex === 0 ? "not-allowed" : "pointer" }}
@@ -113,13 +139,13 @@ const handleNext = () => {
         </div>
 
         <div className="d-flex gap-4 align-items-center">
-            <Button >Shuffle Flashcards</Button>
+            <Button onClick={shuffleCards}>Shuffle Flashcards</Button>
             <Button onClick={() => navigate(`/profile/${project}/decks/${deck_id}/edit`)}>Edit Flashcards</Button>
         </div>
       </>
         
-    </div>
-    
+    </div> 
+  )
   );
 };
 

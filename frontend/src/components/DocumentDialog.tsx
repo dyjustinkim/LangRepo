@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import {Dropdown} from "react-bootstrap";
 
 interface DocDialogProps {
   onSuccess: (file: File | null, name: string) => void;

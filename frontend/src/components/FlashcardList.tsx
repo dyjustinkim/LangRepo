@@ -2,13 +2,9 @@ import React, { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import FlashcardDialog from "./FlashcardDialog.tsx"
 import { useAuth0 } from "@auth0/auth0-react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import {Container, ListGroup, DropdownButton, Dropdown, Button, DropdownItem} from "react-bootstrap";
-import EditDialog from './EditDialog.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
 
 interface flashcard {
@@ -29,6 +25,7 @@ const FlashcardList = () => {
   const [deckName, setDeckName] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [loading, setIsLoading] = useState(true);
   
 
   const navigate = useNavigate();
@@ -87,13 +84,23 @@ const FlashcardList = () => {
     }
 
   useEffect(() => {
-    getProjectId();
-    getDeckName();
-    fetchFlashcards();
+    const loadData = async () => {
+      await getProjectId();
+      await getDeckName();
+      await fetchFlashcards();
+      setIsLoading(false); 
+    };
+    loadData();
+   
   }, []);
  
 
   return (
+    loading ? (
+    <>
+      <h4>Loading flashcards...</h4>
+    </>
+  ) : (
     <div className="card">
       <h2>{project}: {deckName} Flashcards List</h2> 
         <Container>
@@ -130,7 +137,7 @@ const FlashcardList = () => {
         </table>
 
         <div className="d-flex justify-content-evenly mt-3">
-            <Button onClick={() => navigate(`/profile/${project}/decks/${deck_id}/study`)}>Study Flashcards</Button>
+            <Button disabled={flashcards.length===0} onClick={() => navigate(`/profile/${project}/decks/${deck_id}/study`)}>Study Flashcards</Button>
             <Button onClick={() => setShowAdd(true)}>Add Flashcards</Button>
 
             <FlashcardDialog
@@ -144,7 +151,9 @@ const FlashcardList = () => {
         </Container>
         
     </div>
+  )
   );
+  
 };
 
 

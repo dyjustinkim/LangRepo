@@ -1,11 +1,7 @@
 import {useAuth0} from '@auth0/auth0-react';
-import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/myNavBar.tsx';
-import { Container } from 'react-bootstrap';
-import AddItem from '../components/AddItemForm.tsx';
-import EditDialog from '../components/EditDialog.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
 
 export default function Account() {

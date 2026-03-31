@@ -3,7 +3,7 @@ import authApi from "../api/apiClient.ts";
 import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.css";
-import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import {ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import EditDialog from './EditDialog.tsx';
 
@@ -19,11 +19,13 @@ type ProjectListProps = {
 const ProjectList = ({username}: ProjectListProps) => {
   const [projects, setProjects] = useState<project[]>([]);
   const { getAccessTokenSilently } = useAuth0();
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchProjects = async () => {
     try {
       const response = await authApi.get('/projects', getAccessTokenSilently);
       setProjects(response.data);
+      return ("Success")
     } catch (error) {
       console.error("Error fetching Projects", error);
     }
@@ -58,10 +60,22 @@ const ProjectList = ({username}: ProjectListProps) => {
 
 
   useEffect(() => {
-    fetchProjects();
+    const loadData = async () => {
+      await fetchProjects(); 
+      setIsLoading(false);
+    };
+    loadData();
   }, []);
 
   return (
+  isLoading ? (
+    <>
+      <h4>Loading projects...</h4>
+    </>
+  ) : (
+    
+  
+    
     <div className="card">
       
       <h2>Projects List</h2>
@@ -83,7 +97,8 @@ const ProjectList = ({username}: ProjectListProps) => {
 
       < AddItem label="Project" onSuccess={addProject} />
     </div>
-  );
+  )
+  )
 };
 
 export default ProjectList;

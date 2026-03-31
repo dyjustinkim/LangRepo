@@ -1,14 +1,10 @@
-import { Document, Page } from 'react-pdf';
 import PdfViewer from '../components/PdfViewer';
 import {useAuth0} from '@auth0/auth0-react';
-import LogoutButton from '../components/LogoutButton.tsx';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
-import MyNavBar from '../components/myNavBar.tsx';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import AlertModal from '../components/AlertModal.tsx';
 
 

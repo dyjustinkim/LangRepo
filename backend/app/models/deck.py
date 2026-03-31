@@ -8,3 +8,11 @@ class Deck(Base):
     name = Column(String)
     project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE"))
     project = relationship("Project", back_populates="decks")
+
+    flashcards = relationship(
+        "Flashcard",
+        back_populates="deck",
+        cascade="all, delete"
+    )
+
+   

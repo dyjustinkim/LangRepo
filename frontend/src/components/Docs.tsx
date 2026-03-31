@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import authApi from "../api/apiClient.ts";
-import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import {Container, ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
+import {ListGroup, DropdownButton, Dropdown} from "react-bootstrap";
 import EditDialog from './EditDialog.tsx';
 import DocDialog from './DocumentDialog.tsx';
 
@@ -56,7 +53,8 @@ const DocList =({username}: DocListProps) => {
         if (!response.ok) {
         const text = await response.text(); 
         console.error("Upload failed", response.status, text);
-        } else {console.log("Upload successful!");
+        } else {
+          console.log("Upload successful!");
         }
         } catch (err) {
         console.error("Fetch error:", err);
@@ -95,6 +93,12 @@ const DocList =({username}: DocListProps) => {
 }, [projectId]);
 
   return (
+    !docs ? (
+    <>
+      <h4>Loading documents...</h4>
+    </>
+  ) : (
+    
     <div className="card">
       <h2>{project}: Documents</h2>
   
@@ -116,6 +120,7 @@ const DocList =({username}: DocListProps) => {
       <DocDialog onSuccess={addDoc}></DocDialog>
       
     </div>
+  )
   );
 };
 

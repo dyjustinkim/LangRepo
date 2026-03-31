@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import {Dropdown} from "react-bootstrap";
 
 interface EditDialogProps {
   onSuccess: (front: string, back: string, flashcard_id?: number) => void;
