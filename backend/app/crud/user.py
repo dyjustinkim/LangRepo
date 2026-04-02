@@ -7,10 +7,15 @@ def get_user(db: Session, auth0_id:str):
     return user
     
 def add_username(new_user: UserCreate, db: Session, auth0_id:str):   
-    db_deck = User(username=new_user.username, user_id=auth0_id["sub"])    
-    db.add(db_deck)
-    db.commit()
-    db.refresh(db_deck)
+    user = db.query(User).filter_by(username=new_user.username).first()
+    if user:
+        return {"exists": True}
+    else:
+        db_user = User(username=new_user.username, user_id=auth0_id["sub"])    
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return {"exists": False}
 
 def edit_username(db: Session, new_name: UserCreate, user_id: int, auth0_id:str):
     user = db.query(User).filter(User.user_id == auth0_id["sub"]).first()

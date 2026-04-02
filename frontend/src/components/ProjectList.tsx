@@ -19,7 +19,7 @@ type ProjectListProps = {
 const ProjectList = ({username}: ProjectListProps) => {
   const [projects, setProjects] = useState<project[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchProjects = async () => {
     try {
@@ -42,8 +42,10 @@ const ProjectList = ({username}: ProjectListProps) => {
 
   const addProject = async (projectName: string) => {
     try {
+      setLoading(true)
       await authApi.post('/projects', { name: projectName }, getAccessTokenSilently);
       fetchProjects(); 
+      setLoading(false)
     } catch (error) {
       console.error("Error adding Project", error);
     }
@@ -62,20 +64,11 @@ const ProjectList = ({username}: ProjectListProps) => {
   useEffect(() => {
     const loadData = async () => {
       await fetchProjects(); 
-      setIsLoading(false);
     };
     loadData();
   }, []);
 
   return (
-  isLoading ? (
-    <>
-      <h4>Loading projects...</h4>
-    </>
-  ) : (
-    
-  
-    
     <div className="card">
       
       <h2>Projects List</h2>
@@ -95,10 +88,10 @@ const ProjectList = ({username}: ProjectListProps) => {
         ))}
           </ListGroup>
 
-      < AddItem label="Project" onSuccess={addProject} />
+      < AddItem loading={loading} label="Project" onSuccess={addProject} />
     </div>
   )
-  )
+  
 };
 
 export default ProjectList;

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 interface addItemFormProps {
+  loading: boolean;
   label: string;
   onSuccess: (name: string) => void;
   
 }
 
-const addItem: React.FC<addItemFormProps> = ({ label, onSuccess }) => {
+const addItem: React.FC<addItemFormProps> = ({ loading, label, onSuccess }) => {
   const [itemName, setItemName] = useState('');
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
@@ -27,7 +28,16 @@ const addItem: React.FC<addItemFormProps> = ({ label, onSuccess }) => {
           onChange={(e) => setItemName(e.target.value)}
           placeholder={"Enter " + label + " name"}
         />
-        <button className="btn btn-primary text-nowrap" type="submit">Add {label}</button>
+        <button disabled={loading} className="btn btn-primary text-nowrap" type="submit">
+          {loading ? (
+                    <>
+                    <span className="spinner-border spinner-border-sm me-2" />
+                    Adding...
+                    </>
+                ) : (
+                    `Add ${label}`
+                )}
+        </button>
       </div>
     </form>
   );

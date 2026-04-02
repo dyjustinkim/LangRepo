@@ -22,7 +22,7 @@ const DocList =({username}: DocListProps) => {
   const { getAccessTokenSilently } = useAuth0();
   const{project, doc} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
-
+  const [loading, setLoading] = useState(false)
 
   const fetchDocs = async () => {
     try {
@@ -44,6 +44,7 @@ const DocList =({username}: DocListProps) => {
 
   const addDoc = async (file: File | null, docName: string) => {
     try {
+      setLoading(true)
       const signedUrl = await authApi.post('/docs', { name: docName, project_id: projectId, filename: file!.name}, getAccessTokenSilently);
       try { const response = await fetch(signedUrl.data, {
             method: "PUT",
@@ -54,12 +55,12 @@ const DocList =({username}: DocListProps) => {
         const text = await response.text(); 
         console.error("Upload failed", response.status, text);
         } else {
-          console.log("Upload successful!");
         }
         } catch (err) {
         console.error("Fetch error:", err);
         } 
       fetchDocs(); 
+      setLoading(false)
   
         
     } catch (error) {
@@ -117,7 +118,7 @@ const DocList =({username}: DocListProps) => {
         ))}
           </ListGroup>
 
-      <DocDialog onSuccess={addDoc}></DocDialog>
+      <DocDialog loading={loading} onSuccess={addDoc}></DocDialog>
       
     </div>
   )

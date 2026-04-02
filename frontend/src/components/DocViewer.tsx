@@ -56,7 +56,6 @@ const DocViewer = () => {
             }
             else {
               try {
-                console.log(selectedDeck);
                 const status = await authApi.post(`/docs/${doc_id}/generate`, {deck_id: selectedDeck, project_id: projectId }, getAccessTokenSilently);
                 setShowSuccess(true)
                 
@@ -75,12 +74,13 @@ const DocViewer = () => {
 
           
         <div className="card"> 
-            {url === null ? (
-        <p>Fetching document...</p>
-        ) : (
+            {(!url) && <p>Fetching document...</p>}
+            
+            {url && (
             <>
             <h2>{url.data.name}</h2>
-        <PdfViewer url={url.data.url} loadingFunc={setLoading} /> 
+            {(loading) && <p>Loading document...</p>}
+        <PdfViewer url={url.data.url} loadingFunc={setLoading} loading={loading} /> 
         <Form onSubmit={handleSubmit}>
             <div className="d-flex flex-column">
             <div className="d-flex gap-3 align-items-center">
@@ -103,7 +103,7 @@ const DocViewer = () => {
                 <AlertModal show={showFail} onHide={handleClose} text={"Select a deck to generate flashcards to!"}></AlertModal>
 
                 <AlertModal show={showSuccess} onHide={handleClose} text={"Successfully generated flashcards!"}></AlertModal>
-
+                
             </div>
             </div>
         </Form>

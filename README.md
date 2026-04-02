@@ -46,3 +46,4 @@ https://dev.to/gilly7/building-your-first-full-stack-crud-app-with-fastapi-and-r
 https://react-bootstrap.netlify.app/docs/components/navbar/ # React NavBar component
 https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c # Private routes
 https://docs.aws.amazon.com/nova/latest/userguide/using-invoke-api.html # Amazon Bedrock Nova model Invoke API Documentation
+https://fastapi.tiangolo.com/tutorial/middleware/#create-a-middleware # FastAPI Logging Middleware

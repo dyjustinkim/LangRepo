@@ -14,14 +14,14 @@ def get_docs(proj_id: int, db: Session, auth0_id:str):
 
 def view_doc(doc_id: int, db: Session, auth0_id:str):
     doc = db.query(Doc).filter(Doc.id == doc_id).first()
-    key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
+    key = f"{auth0_id['sub']}/{doc.project_id}/{doc.filename}"
     url = generate_presigned_url(
         "get_object", key, 3600
     )
     return {"url": url, "name": doc.name, "project_id": doc.project_id} 
 
 def add_doc(doc: DocCreate, db: Session, auth0_id:str):
-    key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
+    key = f"{auth0_id['sub']}/{doc.project_id}/{doc.filename}"
     url = generate_presigned_url(
         "put_object", key, 300, "application/pdf"
     )
@@ -33,7 +33,7 @@ def add_doc(doc: DocCreate, db: Session, auth0_id:str):
 
 def delete_doc(db: Session, doc_id: int, auth0_id:str):
     db_doc = db.query(Doc).filter(Doc.id == doc_id).first()
-    key = f"{auth0_id["sub"]}/{db_doc.project_id}/{db_doc.filename}"
+    key = f"{auth0_id['sub']}/{db_doc.project_id}/{db_doc.filename}"
     try:
         delete_file(key)
     except Exception as e:
@@ -48,7 +48,7 @@ def edit_doc(db: Session, new_doc: DocCreate, old_doc: int, auth0_id:str):
 
 def generate_flashcards(info: GenFlash, db: Session, doc_id: int, auth0_id:str):
     doc = db.query(Doc).filter(Doc.id == doc_id).first()
-    key = f"{auth0_id["sub"]}/{doc.project_id}/{doc.filename}"
+    key = f"{auth0_id['sub']}/{doc.project_id}/{doc.filename}"
     pdf = read_doc(key)
     flashcards = call_bedrock(pdf)
     return bulk_save_objects(flashcards, info.deck_id, db)

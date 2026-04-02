@@ -7,10 +7,11 @@ import authApi from '../api/apiClient.ts';
 export default function AuthGate() {
   const { isAuthenticated, isLoading, getAccessTokenSilently, user } = useAuth0();
   const navigate = useNavigate();
+  
+
 
   useEffect(() => {
-    async function checkUser() {
-        
+    async function checkUser() {        
       const response = await authApi.get('/users', getAccessTokenSilently);
        if (response.data == null) {
         navigate("/register", { replace: true });

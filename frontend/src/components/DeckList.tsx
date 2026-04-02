@@ -23,6 +23,7 @@ const DeckList =({username}: DeckListProps) => {
   const { getAccessTokenSilently } = useAuth0();
   const{project, deck} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false)
 
 
   const fetchDecks = async () => {
@@ -45,8 +46,10 @@ const DeckList =({username}: DeckListProps) => {
 
   const addDeck = async (deckName: string) => {
     try {
+      setLoading(true)
       await authApi.post('/decks', { name: deckName, project_id: projectId }, getAccessTokenSilently);
       fetchDecks(); 
+      setLoading(false)
     } catch (error) {
       console.error("Error adding Deck", error);
     }
@@ -101,7 +104,7 @@ const DeckList =({username}: DeckListProps) => {
         ))}
           </ListGroup>
 
-      < AddItem label="Deck" onSuccess={addDeck} />
+      < AddItem loading={loading} label="Deck" onSuccess={addDeck} />
     </div>
   )
   );

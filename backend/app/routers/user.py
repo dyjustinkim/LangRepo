@@ -12,7 +12,7 @@ def get_user(db: db_dependency, user=Depends(verify_user)):
     
 @router.post("")
 def add_username(new_user: UserCreate, db: db_dependency, user=Depends(verify_user)):   
-    user_crud.add_username(new_user, db, user)
+    return user_crud.add_username(new_user, db, user)
 
 @router.put("/{user_id}")
 def edit_username(new_name: UserCreate, db: db_dependency, user_id: str,  user=Depends(verify_user)):

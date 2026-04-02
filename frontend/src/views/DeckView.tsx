@@ -2,7 +2,7 @@ import {useAuth0} from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
-import MyNavBar from '../components/myNavBar.tsx';
+import MyNavBar from '../components/MyNavBar.tsx';
 import FlashcardList from '../components/FlashcardList.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
 

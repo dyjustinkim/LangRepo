@@ -61,14 +61,23 @@ const FlashcardList = () => {
 
   
 
-  const editFlashcard = async (front: string, back: string, flashcardId: number | undefined) => {
+  const flipFlashcard = async (oldFront:string, oldBack:string, flashcardId: number) => {
       try {
-        await authApi.put('/flashcards/'+flashcardId, {front, back, deck_id}, getAccessTokenSilently);
+        await authApi.put('/flashcards/'+flashcardId, {front: oldBack, back: oldFront, deck_id}, getAccessTokenSilently);
         fetchFlashcards(); 
       } catch (error) {
-        console.error("Error editing Flashcard", error);
+        console.error("Error flipping Flashcard", error);
       }
     }; 
+
+  const editFlashcard = async (front: string, back: string, flashcardId: number | undefined) => {
+    try {
+      await authApi.put('/flashcards/'+flashcardId, {front, back, deck_id}, getAccessTokenSilently);
+      fetchFlashcards(); 
+    } catch (error) {
+      console.error("Error editing Flashcard", error);
+    }
+  }; 
   
 
   async function getProjectId() {
@@ -128,7 +137,7 @@ const FlashcardList = () => {
                         oldFront={card.front}
                         oldBack={card.back}
                         />
-
+                        <Dropdown.Item onClick={() => flipFlashcard(card.front, card.back, card.id)}>Flip front and back</Dropdown.Item>
                         <Dropdown.Item onClick={() => deleteFlashcard(card.id)}>Delete</Dropdown.Item>
                     </DropdownButton>  
                 </tr>

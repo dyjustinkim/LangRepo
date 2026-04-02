@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  postgres:
+  db:
     image: postgres:15
     env_file:
       - postgres.env
@@ -17,7 +17,7 @@ services:
     env_file:
       - ./backend/.env
     depends_on:
-      - postgres
+      - db
 
   frontend:
     build: ./frontend

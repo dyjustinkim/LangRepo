@@ -16,6 +16,8 @@ from sqlalchemy import text
 import time
 import logging
 import app.models
+import json
+
 
 app = FastAPI()
 
@@ -33,37 +35,48 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+metrics = {
+    "request_count": 0,
+    "error_count": 0
+}
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
-app.middleware("http")
+@app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
     response = await call_next(request)
+    metrics["request_count"] += 1
+    if response.status_code >= 400:
+        metrics["error_count"] += 1
     duration = time.time() - start_time
-    logger.info(
-        f"[CUSTOM LOG]"
-        f"{request.method} {request.url.path} "
-        f"status={response.status_code} "
-        f"duration={duration:.3f}s"
-    )
-
+    logger.info(json.dumps({
+        "method": request.method,
+        "path": request.url.path,
+        "status": response.status_code,
+        "duration": duration
+    }))
     return response
 
-app.include_router(user_router)
-app.include_router(project_router)
-app.include_router(deck_router)
-app.include_router(doc_router)
-app.include_router(flashcard_router)
+@app.get("/metrics")
+def get_metrics():
+    return metrics
 
-health_router = APIRouter()
-@health_router.get("/health")
+@app.get("/health")
 def health_check(db: db_dependency):
     try:
         db.execute(text("SELECT 1"))
         return {"status": "ok"}
     except Exception:
         return {"status": "error"}
-app.include_router(health_router)
+    
+app.include_router(user_router)
+app.include_router(project_router)
+app.include_router(deck_router)
+app.include_router(doc_router)
+app.include_router(flashcard_router)
+
+
 
 
 

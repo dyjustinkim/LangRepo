@@ -4,10 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
 interface DocDialogProps {
+  loading: boolean;
   onSuccess: (file: File | null, name: string) => void;
 }
 
-const DocDialog: React.FC<DocDialogProps> = ({onSuccess}) => {
+const DocDialog: React.FC<DocDialogProps> = ({loading, onSuccess}) => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState('');
   const [file, setFile] = useState<File | null>(null)
@@ -40,8 +41,15 @@ const DocDialog: React.FC<DocDialogProps> = ({onSuccess}) => {
 
   return (
     <>
-      <Button onClick={handleShow}>
-        Add Document
+      <Button disabled={loading} onClick={handleShow}>
+        {loading ? (
+                    <>
+                    <span className="spinner-border spinner-border-sm me-2" />
+                    Adding...
+                    </>
+                ) : (
+                    `Add document`
+                )}
       </Button>
 
       <Modal show={show} onHide={handleClose}>

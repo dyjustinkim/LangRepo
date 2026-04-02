@@ -2,7 +2,7 @@ import DeckList from '../components/DeckList.tsx'
 import {useAuth0} from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
-import MyNavBar from '../components/myNavBar.tsx';
+import MyNavBar from '../components/MyNavBar.tsx';
 import DocList from '../components/Docs.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
 
