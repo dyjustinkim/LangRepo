@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/MyNavBar.tsx';
 import {useNavigate, Navigate } from 'react-router-dom';
+import AlertModal from '../components/AlertModal.tsx';
 
 export default function Account() {
     const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
+    const [exists, setExists] = useState(false)
         
 
       if (isLoading) {
@@ -15,7 +17,9 @@ export default function Account() {
     }
     const editUsername = async (userId: string | number, newName: string) => {
         try {
-          await authApi.put('/users/'+userId, {username: newName, user_id: " "}, getAccessTokenSilently);
+          const response = await authApi.put('/users/'+userId, {username: newName, user_id: " "}, getAccessTokenSilently);
+          if (response.data.exists == true) {
+            setExists(true) }
         } catch (error: any) {
             
             if (error) {
@@ -24,6 +28,9 @@ export default function Account() {
         }
       };
     
+    const handleClose = () => 
+    {
+      setExists(false)}
   
 
     const EditName = ({ }) => {
@@ -78,6 +85,7 @@ export default function Account() {
             <h2 style={{ fontSize: "2rem" }}>Account Settings</h2>
             <p style={{ fontSize: "1.6rem" }}>Current Username: <span style={{ color: "blue" }}>{username}</span></p>
         < EditName/>
+        <AlertModal show={exists} onHide={handleClose} text={"That username is already taken!"}></AlertModal>
         </div>
         </div>
 

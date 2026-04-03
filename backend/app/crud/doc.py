@@ -9,7 +9,7 @@ from app.services.ai_service import call_bedrock
 from app.services.flashcard_service import bulk_save_objects
 
 def get_docs(proj_id: int, db: Session, auth0_id:str):
-    docs = db.query(Doc).filter(Doc.project_id == proj_id).all()
+    docs = db.query(Doc).filter(Doc.project_id == proj_id).order_by(Doc.id).all()
     return docs
 
 def view_doc(doc_id: int, db: Session, auth0_id:str):

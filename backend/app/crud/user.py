@@ -18,6 +18,11 @@ def add_username(new_user: UserCreate, db: Session, auth0_id:str):
         return {"exists": False}
 
 def edit_username(db: Session, new_name: UserCreate, user_id: int, auth0_id:str):
-    user = db.query(User).filter(User.user_id == auth0_id["sub"]).first()
-    user.username = new_name.username
-    db.commit()
+    search_user = db.query(User).filter_by(username=new_name.username).first()
+    if search_user:
+        return {"exists": True}
+    else:
+        user = db.query(User).filter(User.user_id == auth0_id["sub"]).first()
+        user.username = new_name.username
+        db.commit()
+        return {"exists": False}

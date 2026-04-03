@@ -124,22 +124,24 @@ const FlashcardList = () => {
             <tbody>
                 {flashcards.map((card) => (
                 <tr key={card.id}>
-                    <td>{card.front}</td>
-                    <td>{card.back}</td>
-                    <DropdownButton title="Settings">
-                        <DropdownItem onClick={() => setShowEdit(true)}>Edit Flashcard</DropdownItem>
-                        <FlashcardDialog
-                        show={showEdit}
-                        onHide={() => setShowEdit(false)}
-                        label="Edit Flashcard"
-                        flashcard_id={card.id}
-                        onSuccess={editFlashcard}
-                        oldFront={card.front}
-                        oldBack={card.back}
-                        />
-                        <Dropdown.Item onClick={() => flipFlashcard(card.front, card.back, card.id)}>Flip front and back</Dropdown.Item>
-                        <Dropdown.Item onClick={() => deleteFlashcard(card.id)}>Delete</Dropdown.Item>
-                    </DropdownButton>  
+                    <td style={{ width: "45%" }}>{card.front}</td>
+                    <td style={{ width: "45%" }}>{card.back}</td>
+                    <td style={{ width: "10%" }}>{
+                      <DropdownButton title="Settings">
+                          <DropdownItem onClick={() => setShowEdit(true)}>Edit Flashcard</DropdownItem>
+                          <FlashcardDialog
+                          show={showEdit}
+                          onHide={() => setShowEdit(false)}
+                          label="Edit Flashcard"
+                          flashcard_id={card.id}
+                          onSuccess={editFlashcard}
+                          oldFront={card.front}
+                          oldBack={card.back}
+                          />
+                          <Dropdown.Item onClick={() => flipFlashcard(card.front, card.back, card.id)}>Flip front and back</Dropdown.Item>
+                          <Dropdown.Item onClick={() => deleteFlashcard(card.id)}>Delete</Dropdown.Item>
+                      </DropdownButton>  
+                    }</td>
                 </tr>
                 ))}
             </tbody>

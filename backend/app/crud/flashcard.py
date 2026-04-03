@@ -7,7 +7,7 @@ def map_flashcard(db: Session, flashcard_name: str, auth0_id:str):
     return {"flashcard_id": flashcard.id}
 
 def get_flashcards(db: Session, deck_id: int, auth0_id:str):
-    flashcards = db.query(Flashcard).filter(Flashcard.deck_id == deck_id).all()
+    flashcards = db.query(Flashcard).filter(Flashcard.deck_id == deck_id).order_by(Flashcard.id).all()
     return flashcards
 
 def add_flashcard(flashcard: FlashcardCreate, db: Session, auth0_id:str):    

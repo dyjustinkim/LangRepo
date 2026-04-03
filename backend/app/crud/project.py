@@ -7,7 +7,7 @@ def map_project(db: Session, project_name: str, auth0_id:str):
     return {"project_id": project.id}
 
 def get_projects(db: Session, auth0_id:str):
-    projects = db.query(Project).filter(Project.user_id == auth0_id["sub"]).all()
+    projects = db.query(Project).filter(Project.user_id == auth0_id["sub"]).order_by(Project.id).all()
     return projects
 
 def add_project(project: ProjectCreate, db: Session, auth0_id:str):    

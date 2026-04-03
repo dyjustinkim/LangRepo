@@ -20,7 +20,6 @@ export default function Register() {
         try {
           setLoading(true)
           const response = await authApi.post('/users', {username: username, user_id: " "}, getAccessTokenSilently);
-          console.log(response)
           if (response.data.exists != true) {
             navigate(`/profile`, { replace: true }); }
           else {

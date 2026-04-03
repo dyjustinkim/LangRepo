@@ -68,7 +68,7 @@ def health_check(db: db_dependency):
         db.execute(text("SELECT 1"))
         return {"status": "ok"}
     except Exception:
-        return {"status": "error"}
+        raise HTTPException(status_code=503, detail="DB unavailable")
     
 app.include_router(user_router)
 app.include_router(project_router)

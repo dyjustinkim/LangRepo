@@ -3,7 +3,7 @@ from app.models.deck import Deck
 from app.schemas.deck import DeckCreate
 
 def get_decks(proj_id: int, db: Session, auth0_id:str):
-    decks = db.query(Deck).filter(Deck.project_id == proj_id).all()
+    decks = db.query(Deck).filter(Deck.project_id == proj_id).order_by(Deck.id).all()
     return decks
 
 def map_deck(deck_id: int, db: Session, auth0_id:str):

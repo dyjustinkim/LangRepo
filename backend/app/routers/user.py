@@ -16,4 +16,4 @@ def add_username(new_user: UserCreate, db: db_dependency, user=Depends(verify_us
 
 @router.put("/{user_id}")
 def edit_username(new_name: UserCreate, db: db_dependency, user_id: str,  user=Depends(verify_user)):
-    user_crud.edit_username(db, new_name, user_id, user)
+    return user_crud.edit_username(db, new_name, user_id, user)
