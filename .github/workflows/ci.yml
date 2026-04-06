@@ -33,7 +33,7 @@ jobs:
       DATABASE_NAME: test_db
       DATABASE_URL: postgresql://test:test@localhost:5432/test_db
       AUTH0_AUDIENCE: test-audience
-      AUTH0_DOMAIN: test-domain.auth0.com
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_ALGORITHMS: RS256
       AWS_REGION: test
       BUCKET_NAME: test
@@ -53,6 +53,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest
+
+      - name: Debug env vars
+        run: |
+          echo "AUTH0_DOMAIN=$AUTH0_DOMAIN"
 
       - name: Run tests
         working-directory: backend
