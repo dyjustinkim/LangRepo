@@ -79,8 +79,11 @@ jobs:
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: List repo files
+        run: ls -R
+
       - name: Build and push image
         run: |
-          docker buildx build --platform linux/amd64 -t langrepo:latest .
+          docker buildx build --platform linux/amd64 -t langrepo:latest ./backend
           docker tag langrepo:latest 480442107509.dkr.ecr.us-east-1.amazonaws.com/langrepo:latest
           docker push 480442107509.dkr.ecr.us-east-1.amazonaws.com/langrepo:latest
