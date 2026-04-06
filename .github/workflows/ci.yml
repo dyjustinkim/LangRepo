@@ -32,9 +32,9 @@ jobs:
       DATABASE_PORT: 5432
       DATABASE_NAME: test_db
       DATABASE_URL: postgresql://test:test@localhost:5432/test_db
-      AUTH0_AUDIENCE: test
-      AUTH0_DOMAIN: test
-      AUTH0_ALGORITHMS: test
+      AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE}}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_ALGORITHMS: ${{ secrets.AUTH0_ALGORITHMS }}
       AWS_REGION: test
       BUCKET_NAME: test
 
