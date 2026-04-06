@@ -65,6 +65,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    environment: langrepo
     needs: test
 
     steps:
