@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 
 const LogoutButton: React.FC = () => {
-    const {logout, isAuthenticated} = useAuth0();
+    const {logout} = useAuth0();
     return (
 
             <Button 

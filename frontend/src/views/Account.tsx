@@ -2,13 +2,11 @@ import {useAuth0} from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/MyNavBar.tsx';
-import {useNavigate, Navigate } from 'react-router-dom';
 import AlertModal from '../components/AlertModal.tsx';
 
 export default function Account() {
-    const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
+    const {user, isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string>('');
-    const navigate = useNavigate();
     const [exists, setExists] = useState(false)
         
 

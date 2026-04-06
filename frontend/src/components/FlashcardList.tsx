@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import FlashcardDialog from "./FlashcardDialog.tsx"
 import { useAuth0 } from "@auth0/auth0-react";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import {Container, ListGroup, DropdownButton, Dropdown, Button, DropdownItem} from "react-bootstrap";
-import {useNavigate, Navigate } from 'react-router-dom';
+import {Container, DropdownButton, Dropdown, Button, DropdownItem} from "react-bootstrap";
+import {useNavigate } from 'react-router-dom';
 
 interface flashcard {
   id: number
@@ -13,15 +13,10 @@ interface flashcard {
   back: string;
 }
 
-type FlashcardListProps = {
-  username: string;
-};
-
 const FlashcardList = () => {
   const [flashcards, setFlashcards] = useState<flashcard[]>([]);
   const { getAccessTokenSilently } = useAuth0();
   const{project, deck_id} = useParams();
-  const [projectId, setProjectId] = useState<number | null>(null);
   const [deckName, setDeckName] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -42,7 +37,7 @@ const FlashcardList = () => {
   
   const deleteFlashcard = async (flashcardId: number) => {
       try {
-        const response = await authApi.delete('/flashcards/'+flashcardId, getAccessTokenSilently);
+        await authApi.delete('/flashcards/'+flashcardId, getAccessTokenSilently);
         fetchFlashcards(); 
       } catch (error) {
         console.error("Error deleting Flashcard", error);
@@ -80,12 +75,6 @@ const FlashcardList = () => {
   }; 
   
 
-  async function getProjectId() {
-            
-    const response = await authApi.get('/projects/'+project, getAccessTokenSilently);
-    setProjectId(response.data.project_id);
-    };
-
   async function getDeckName() {
             
     const response = await authApi.get('/decks/map/'+ deck_id, getAccessTokenSilently);
@@ -94,7 +83,6 @@ const FlashcardList = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      await getProjectId();
       await getDeckName();
       await fetchFlashcards();
       setIsLoading(false); 

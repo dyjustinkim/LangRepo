@@ -17,14 +17,18 @@ import time
 import logging
 import app.models
 import json
+from contextlib import asynccontextmanager
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield  
 
-app = FastAPI()
-
-Base.metadata.create_all(bind=engine)
+app = FastAPI(lifespan=lifespan)
 
 origins = [
-    "http://localhost:3000"
+    "https://langrepo.cloud",
+    "https://www.langrepo.cloud"
 ]
 
 app.add_middleware(

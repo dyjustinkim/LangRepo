@@ -1,11 +1,11 @@
 import {useAuth0} from '@auth0/auth0-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import ProjectList from '../components/ProjectList.tsx';
 import MyNavBar from '../components/MyNavBar.tsx';
 
 export default function Projects() {
-    const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
+    const {isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string>('');
     
     
@@ -31,7 +31,7 @@ export default function Projects() {
     <>
         <MyNavBar username={username}></MyNavBar>
         <div className="my-container">
-          <ProjectList username={username}/>
+          <ProjectList/>
         </div>
     </>
     

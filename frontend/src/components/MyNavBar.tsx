@@ -9,7 +9,7 @@ type MyNavBarProps = {
 };
 
 function MyNavBar({username}: MyNavBarProps) {
-  const {logout, isAuthenticated} = useAuth0();
+  const {logout} = useAuth0();
   return (
     <div>
       <Navbar bg="light" data-bs-theme="light">

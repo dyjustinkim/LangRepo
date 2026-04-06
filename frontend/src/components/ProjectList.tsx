@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,11 +12,7 @@ interface project {
   name: string;
 }
 
-type ProjectListProps = {
-  username: string;
-};
-
-const ProjectList = ({username}: ProjectListProps) => {
+const ProjectList = () => {
   const [projects, setProjects] = useState<project[]>([]);
   const { getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(false);

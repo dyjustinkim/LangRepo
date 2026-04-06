@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useParams} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import {Button} from "react-bootstrap";
-import {useNavigate, Navigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Flashcard from './Flashcard.tsx';
 
 interface flashcard {
@@ -17,10 +17,7 @@ const FlashcardPlayer =() => {
   const [flashcards, setFlashcards] = useState<flashcard[]>([]);
   const { getAccessTokenSilently } = useAuth0();
   const{project, deck_id} = useParams();
-  const [projectId, setProjectId] = useState<number | null>(null);
   const [deckName, setDeckName] = useState<string | null>(null);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [loading, setIsLoading] = useState(true);

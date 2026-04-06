@@ -1,9 +1,5 @@
-import { useState } from 'react'
 import './index.css'
 import { Routes, Route } from "react-router-dom";
-import LoginButton from "./components/LoginButton"
-import LogoutButton from "./components/LogoutButton"
-import DeckList from './components/DeckList'
 import Profile from './views/ProfileView'
 import Login from './views/Login'
 import AuthGate from './views/AuthGate'

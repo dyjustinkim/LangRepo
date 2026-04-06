@@ -2,8 +2,8 @@ import {useAuth0} from '@auth0/auth0-react';
 import LogoutButton from '../components/LogoutButton';
 import AddItem from '../components/AddItemForm';
 import authApi from '../api/apiClient';
-import {useNavigate, Navigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import {useNavigate } from 'react-router-dom';
+import {useState } from 'react';
 import AlertModal from '../components/AlertModal';
 
 export default function Register() {

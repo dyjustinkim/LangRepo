@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
@@ -13,14 +13,10 @@ interface doc {
   name: string;
 }
 
-type DocListProps = {
-  username: string;
-};
-
-const DocList =({username}: DocListProps) => {
+const DocList =() => {
   const [docs, setDocs] = useState<doc[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{project, doc} = useParams();
+  const{project} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false)
 
@@ -35,7 +31,7 @@ const DocList =({username}: DocListProps) => {
 
   const deleteDoc = async (docId: number) => {
       try {
-        const response = await authApi.delete('/docs/'+docId, getAccessTokenSilently);
+        await authApi.delete('/docs/'+docId, getAccessTokenSilently);
         fetchDocs(); 
       } catch (error) {
         console.error("Error deleting Doc", error);

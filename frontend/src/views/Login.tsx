@@ -14,6 +14,7 @@ export default function Login() {
             <img style={{ width: "400px", height: "auto" }} src={image.logo} alt="Logo" className="logo"/>
             <LoginButton/>
         </div>
+        <p>Made by Justin Kim</p>
     </div>
     
     )

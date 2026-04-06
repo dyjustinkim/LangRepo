@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine
 from app.core.settings import settings
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, declarative_base
 from fastapi import Depends
 from typing import Annotated
 

@@ -4,13 +4,11 @@ import boto3
 from botocore.exceptions import ClientError
 import requests
 from app.core.settings import settings
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from io import BytesIO
 
 s3_client = boto3.client(
     "s3",
-    aws_access_key_id=settings.aws_access_key_id,
-    aws_secret_access_key=settings.aws_secret_access_key,
     region_name=settings.aws_region
                          )
 bucket_name = settings.bucket_name

@@ -1,14 +1,13 @@
 import {useAuth0} from '@auth0/auth0-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import { useParams } from "react-router-dom";
-import {useNavigate, Navigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import MyNavBar from '../components/MyNavBar.tsx';
 import FlashcardPlayer from '../components/FlashcardPlayer.tsx';
 
 export default function FlashcardViewer() {
-    const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-    const [projectId, setProjectId] = useState<number | null>(null);
+    const {isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
     const{project} = useParams();

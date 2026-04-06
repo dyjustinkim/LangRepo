@@ -1,15 +1,14 @@
 import DeckList from '../components/DeckList.tsx'
 import {useAuth0} from '@auth0/auth0-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from '../api/apiClient.ts';
 import MyNavBar from '../components/MyNavBar.tsx';
 import DocList from '../components/Docs.tsx';
-import {useNavigate, Navigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 
 export default function Decks() {
-    const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-    const [projectId, setProjectId] = useState<number | null>(null);
+    const {isLoading, getAccessTokenSilently} = useAuth0();
     const [username, setUsername] = useState<string>('');    
     const navigate = useNavigate();
 
@@ -35,8 +34,8 @@ export default function Decks() {
     <>
         <MyNavBar username={username}></MyNavBar>
         <div className="my-container">
-            <DeckList username={username}/>
-            <DocList username={username}/>
+            <DeckList/>
+            <DocList/>
 
             <div>
                 <span

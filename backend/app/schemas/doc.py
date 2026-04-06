@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class DocCreate(BaseModel):
     name: str
@@ -6,10 +6,8 @@ class DocCreate(BaseModel):
     filename: str
 
 class DocResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     name: str
     project_id: int
     filename: str
-
-    class Config:
-        from_attributes = True

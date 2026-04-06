@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import authApi from "../api/apiClient.ts";
 import AddItem from './AddItemForm.tsx';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -13,15 +13,10 @@ interface deck {
   id: number
   name: string;
 }
-
-type DeckListProps = {
-  username: string;
-};
-
-const DeckList =({username}: DeckListProps) => {
+const DeckList =() => {
   const [decks, setDecks] = useState<deck[]>([]);
   const { getAccessTokenSilently } = useAuth0();
-  const{project, deck} = useParams();
+  const{project} = useParams();
   const [projectId, setProjectId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false)
 
@@ -37,7 +32,7 @@ const DeckList =({username}: DeckListProps) => {
 
   const deleteDeck = async (deckId: number) => {
       try {
-        const response = await authApi.delete('/decks/'+deckId, getAccessTokenSilently);
+        await authApi.delete('/decks/'+deckId, getAccessTokenSilently);
         fetchDecks(); 
       } catch (error) {
         console.error("Error deleting Deck", error);

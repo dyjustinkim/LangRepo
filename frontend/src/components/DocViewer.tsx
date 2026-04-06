@@ -14,7 +14,7 @@ interface deck {
 }
 
 const DocViewer = () => {
-    const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
+    const {getAccessTokenSilently} = useAuth0();
     const {doc_id} = useParams();
     const [decks, setDecks] = useState<deck[]>([]);
     const [selectedDeck, setSelectedDeck] = useState<string>('null');
@@ -56,7 +56,7 @@ const DocViewer = () => {
             }
             else {
               try {
-                const status = await authApi.post(`/docs/${doc_id}/generate`, {deck_id: selectedDeck, project_id: projectId }, getAccessTokenSilently);
+                await authApi.post(`/docs/${doc_id}/generate`, {deck_id: selectedDeck, project_id: projectId }, getAccessTokenSilently);
                 setShowSuccess(true)
                 
               } catch (error) {
