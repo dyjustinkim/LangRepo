@@ -32,6 +32,11 @@ jobs:
       DATABASE_PORT: 5432
       DATABASE_NAME: test_db
       DATABASE_URL: postgresql://test:test@localhost:5432/test_db
+      AUTH0_AUDIENCE: test
+      AUTH0_DOMAIN: test
+      AUTH0_ALGORITHMS: test
+      AWS_REGION: test
+      BUCKET_NAME: test
 
     steps:
       - name: Checkout repo
