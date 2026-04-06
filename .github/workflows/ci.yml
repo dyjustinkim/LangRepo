@@ -81,6 +81,6 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker buildx build --platform linux/amd64 -t langrepo:latest ./backend
+          docker buildx build --platform linux/amd64 -t langrepo:latest .
           docker tag langrepo:latest 480442107509.dkr.ecr.us-east-1.amazonaws.com/langrepo:latest
           docker push 480442107509.dkr.ecr.us-east-1.amazonaws.com/langrepo:latest
