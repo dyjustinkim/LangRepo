@@ -2,6 +2,8 @@
 
 Full-stack web application for document storage, automatic generation of flashcards, and studying flashcards with secure authentication and role-based access control. Built with FastAPI backend, React frontend, and deployed on AWS infrastructure.
 
+Video demo: https://www.youtube.com/watch?v=wzJOXyPskDs
+
 ## Tech Stack
 
 **Frontend**
