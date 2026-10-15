@@ -33,3 +33,11 @@
   margin-bottom: 1.5rem; 
 }
 
+.footer-container {
+  padding-top: 2rem;
+  display: flex;
+  justify-content: center;   
+  flex-direction: column;
+  align-items: center;   
+  gap: 1rem;
+}

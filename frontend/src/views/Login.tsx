@@ -14,7 +14,12 @@ export default function Login() {
             <img style={{ width: "400px", height: "auto" }} src={image.logo} alt="Logo" className="logo"/>
             <LoginButton/>
         </div>
-        <p>Made by Justin Kim</p>
+        <div className="footer-container">
+        <a href="https://www.youtube.com/watch?v=wzJOXyPskDs" target="_blank" rel="noopener noreferrer">
+            Watch demo video on Youtube
+        </a>
+        <a>© 2026 Justin Kim</a>
+        </div>
     </div>
     
     )
